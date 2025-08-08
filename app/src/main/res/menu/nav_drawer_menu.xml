@@ -4,13 +4,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_page1"
-            android:title="SPL &amp; Matrix" />
+            android:title="@string/spl_matrix" />
         <item
             android:id="@+id/nav_page2"
-            android:title="Cryptography" />
+            android:title="@string/cryptography" />
         <item
             android:id="@+id/nav_page3"
-            android:title="Huffman Coding" />
+            android:title="@string/huffman" />
     </group>
 
 </menu>
