@@ -6,6 +6,15 @@
     <string name="cryptography">Cryptography</string>
     <string name="huffman"> Huffman Coding</string>
 
+    <!-- About -->
+    <string name="about">About</string>
+    <string name="info">Nama saya Carlo Angkisan dengan NIM 13523091</string>
+    <string name="reason">Aplikasi ini dibuat untuk memenuhi Tugas Seleksi IRK yang diberikan oleh Kak Eka. Selain itu, saya tertarik karena poin yang didapatkan cukup besar dan juga tertarik untuk belajar Android Development karena project-project sebelumnya hanya web development dan tidak jauh-jauh dari ekosistem react</string>
+    <string name="vision">Menjadikan IRK ....</string>
+    <string name="mission">1. bjvjfhbjb 2. jfg kghreh</string>
+    <string name="email">carloangkisan21@gmail.com</string>
+    <string name="github">carllix</string>
+
     <!-- Cryptography strings -->
     <string name="cryptography_title">Cryptography</string>
     <string name="caesar_cipher">Caesar Cipher</string>
@@ -56,4 +65,47 @@
     <string name="error_invalid_shift">Nilai pergeseran harus berupa angka!</string>
     <string name="no_characters_to_process">Tidak ada karakter untuk diproses.</string>
     <string name="ascii_note">Catatan: Semua karakter ASCII (0-255) diproses dengan modulo 256.</string>
+
+
+    <!-- Huffman Coding strings -->
+    <string name="huffman_title">Huffman Coding</string>
+    <string name="huffman_input_hint">Masukkan teks untuk dikode</string>
+    <string name="huffman_process">Process</string>
+    <string name="huffman_clear">Clear</string>
+    <string name="huffman_processing">Processing...</string>
+    <string name="huffman_input_title">Input Teks</string>
+    <string name="huffman_tree_view_reset">Reset View</string>
+    <string name="huffman_tree_animation_info">Info: Pinch to zoom, drag to pan, click node to highlight path</string>
+
+    <!-- Huffman Results -->
+    <string name="huffman_compression_info">Informasi Kompresi</string>
+    <string name="huffman_tree_animation">Visualisasi Konstruksi Tree</string>
+    <string name="huffman_construction_steps">Step-by-Step Process</string>
+    <string name="huffman_encoding_results">Encoding &amp; Code Table</string>
+
+    <!-- Huffman Buttons -->
+    <string name="huffman_animate_tree">Animate Tree Construction</string>
+    <string name="huffman_copy_encoded">Copy</string>
+    <string name="huffman_copy_success">Encoded text copied to clipboard</string>
+
+    <!-- Huffman Table Headers -->
+    <string name="huffman_character_header">Simbol</string>
+    <string name="huffman_frequency_header">Frekuensi</string>
+    <string name="huffman_code_header">Kode</string>
+    <string name="huffman_encoded_text_label">Encoded Text:</string>
+    <string name="huffman_code_table_label">Code Table:</string>
+    <string name="huffman_encoding_instruction">Kodekan setiap huruf sesuai dengan tabel kode diatas:</string>
+
+    <!-- Huffman Error Messages -->
+    <string name="huffman_error_empty_input">Input tidak boleh kosong</string>
+    <string name="huffman_error_min_length">Input minimal 2 karakter</string>
+    <string name="huffman_error_max_length">Input maksimal 1000 karakter</string>
+    <string name="huffman_error_whitespace_only">Input tidak boleh hanya spasi</string>
+    <string name="huffman_error_processing">Terjadi kesalahan saat memproses</string>
+
+    <!-- Huffman Steps -->
+    <string name="huffman_step_selected_nodes">Nodes dipilih:</string>
+    <string name="huffman_step_new_node">Node baru:</string>
+    <string name="huffman_step_current_order">Urutan saat ini:</string>
+
 </resources>
