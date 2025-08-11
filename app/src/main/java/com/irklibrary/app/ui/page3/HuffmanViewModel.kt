@@ -39,7 +39,6 @@ class HuffmanViewModel : ViewModel() {
                 _isProcessing.value = true
                 _errorMessage.value = null
 
-                // Simulate processing delay for better UX
                 kotlinx.coroutines.delay(500)
 
                 val result = repository.buildHuffmanTree(inputText.trim())
@@ -62,7 +61,7 @@ class HuffmanViewModel : ViewModel() {
     fun validateInput(text: String): String? {
         return when {
             text.isBlank() -> "Input tidak boleh kosong"
-            text.length < 2 -> "Input minimal 2 karakter"
+            text.length < 1 -> "Input minimal 1 karakter"
             text.length > 1000 -> "Input maksimal 1000 karakter"
             text.all { it.isWhitespace() } -> "Input tidak boleh hanya spasi"
             else -> null

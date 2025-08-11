@@ -1,5 +1,6 @@
 package com.irklibrary.app.ui.page3
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
@@ -65,20 +66,17 @@ class HuffmanTreeView @JvmOverloads constructor(
     private var lastTouchX = 0f
     private var lastTouchY = 0f
 
-    // Gesture detectors
     private val scaleDetector = ScaleGestureDetector(context, ScaleListener())
     private val gestureDetector = GestureDetector(context, GestureListener())
 
-    // Node positions cache with better positioning
     private val nodePositions = mutableMapOf<HuffmanNode, Pair<Float, Float>>()
     private val nodeSubtreeWidths = mutableMapOf<HuffmanNode, Float>()
 
-    // Tree bounds for better positioning
     private var treeBounds = RectF()
 
     fun setHuffmanTree(tree: HuffmanNode?) {
         this.huffmanTree = tree
-        scaleFactor = 1f // Reset scale to normal
+        scaleFactor = 1f
         calculateOptimalPositions()
         centerTree()
         invalidate()
@@ -102,14 +100,12 @@ class HuffmanTreeView @JvmOverloads constructor(
                 return true
             }
         } else {
-            // Try left
             node.left?.let {
                 if (findCharacterPath(it, character, currentPath)) {
                     return true
                 }
             }
 
-            // Try right
             node.right?.let {
                 if (findCharacterPath(it, character, currentPath)) {
                     return true
@@ -126,15 +122,12 @@ class HuffmanTreeView @JvmOverloads constructor(
         nodeSubtreeWidths.clear()
 
         huffmanTree?.let { root ->
-            // First pass: calculate subtree widths
             calculateSubtreeWidths(root)
 
-            // Second pass: position nodes using optimal algorithm
             val rootX = 0f
             val rootY = 100f
             positionNodeOptimal(root, rootX, rootY, 0)
 
-            // Third pass: adjust for any remaining collisions
             adjustForCollisions()
 
             calculateTreeBounds()
@@ -164,7 +157,6 @@ class HuffmanTreeView @JvmOverloads constructor(
 
                 val minRequiredX = prevPos.first + minLevelSpacing
                 if (currentPos.first < minRequiredX) {
-                    // Move current node and all nodes to its right
                     val adjustment = minRequiredX - currentPos.first
                     adjustNodeAndDescendants(currentNode, adjustment, 0f)
 
@@ -280,14 +272,8 @@ class HuffmanTreeView @JvmOverloads constructor(
 
         val viewCenterX = width / 2f
         val treeCenterX = treeBounds.centerX()
-
-        // Center horizontally but ensure all nodes are accessible
         translateX = viewCenterX - treeCenterX
-
-        // Position tree from top with minimal constraint
         translateY = 100f - treeBounds.top
-
-        // Don't apply any size constraints - let user zoom/pan freely
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -298,6 +284,7 @@ class HuffmanTreeView @JvmOverloads constructor(
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         scaleDetector.onTouchEvent(event)
         gestureDetector.onTouchEvent(event)
@@ -316,7 +303,6 @@ class HuffmanTreeView @JvmOverloads constructor(
                     translateX += dx
                     translateY += dy
 
-                    // Apply very loose constraints to prevent tree from going too far
                     constrainTranslationLoose()
 
                     lastTouchX = event.x
@@ -344,11 +330,9 @@ class HuffmanTreeView @JvmOverloads constructor(
         val scaledTreeWidth = treeBounds.width() * scaleFactor
         val scaledTreeHeight = treeBounds.height() * scaleFactor
 
-        // Very generous limits - allow viewing far beyond tree bounds
         val maxTranslateX = scaledTreeWidth + 500f
         val maxTranslateY = scaledTreeHeight + 500f
 
-        // Very loose constraints - basically no real limitation
         translateX = translateX.coerceIn(-maxTranslateX, maxTranslateX)
         translateY = translateY.coerceIn(-maxTranslateY, maxTranslateY)
     }
@@ -374,20 +358,7 @@ class HuffmanTreeView @JvmOverloads constructor(
         return null
     }
 
-    private fun constrainTranslation() {
-        val scaledTreeWidth = treeBounds.width() * scaleFactor
-        val scaledTreeHeight = treeBounds.height() * scaleFactor
-
-        // Give much more freedom for panning to see all nodes
-        val extraPadding = 400f
-        val maxTranslateX = (scaledTreeWidth - width) / 2 + extraPadding
-        val maxTranslateY = (scaledTreeHeight - height) / 2 + extraPadding
-
-        // Allow negative values for panning in all directions
-        translateX = translateX.coerceIn(-maxTranslateX, maxTranslateX)
-        translateY = translateY.coerceIn(-maxTranslateY, maxTranslateY)
-    }
-
+    @SuppressLint("UseKtx")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -403,10 +374,7 @@ class HuffmanTreeView @JvmOverloads constructor(
     }
 
     private fun drawTree(canvas: Canvas, node: HuffmanNode) {
-        // Draw connections first (behind nodes)
         drawConnections(canvas, node)
-
-        // Then draw nodes (in front of connections)
         drawNodes(canvas, node)
     }
 
@@ -425,7 +393,6 @@ class HuffmanTreeView @JvmOverloads constructor(
             }
         } else linePaint
 
-        // Draw left connection with smooth curve
         node.left?.let { leftChild ->
             val leftPos = nodePositions[leftChild] ?: return@let
             val leftX = leftPos.first
@@ -434,14 +401,12 @@ class HuffmanTreeView @JvmOverloads constructor(
             val isLeftHighlighted = highlightedPath.contains(leftChild)
             val connectionPaint = if (isHighlighted && isLeftHighlighted) highlightPaint else linePaint
 
-            // Use smooth curves with better control points
             val path = Path().apply {
                 moveTo(nodeX - nodeWidth * 0.2f, nodeY + nodeHeight / 2)
 
                 val deltaX = abs(nodeX - leftX)
                 val deltaY = abs(leftY - nodeY)
 
-                // More pronounced curve for better separation
                 val controlX1 = nodeX - deltaX * 0.2f
                 val controlY1 = nodeY + deltaY * 0.4f
                 val controlX2 = leftX + deltaX * 0.2f
@@ -452,7 +417,6 @@ class HuffmanTreeView @JvmOverloads constructor(
 
             canvas.drawPath(path, connectionPaint)
 
-            // Draw "0" label with better positioning
             val midX = (nodeX + leftX) / 2 - 25
             val midY = (nodeY + leftY) / 2 - 15
             val labelColor = if (isHighlighted && isLeftHighlighted) {
@@ -467,7 +431,6 @@ class HuffmanTreeView @JvmOverloads constructor(
             drawConnections(canvas, leftChild)
         }
 
-        // Draw right connection with smooth curve
         node.right?.let { rightChild ->
             val rightPos = nodePositions[rightChild] ?: return@let
             val rightX = rightPos.first
@@ -476,14 +439,12 @@ class HuffmanTreeView @JvmOverloads constructor(
             val isRightHighlighted = highlightedPath.contains(rightChild)
             val connectionPaint = if (isHighlighted && isRightHighlighted) highlightPaint else linePaint
 
-            // Use smooth curves with better control points
             val path = Path().apply {
                 moveTo(nodeX + nodeWidth * 0.2f, nodeY + nodeHeight / 2)
 
                 val deltaX = abs(rightX - nodeX)
                 val deltaY = abs(rightY - nodeY)
 
-                // More pronounced curve for better separation
                 val controlX1 = nodeX + deltaX * 0.2f
                 val controlY1 = nodeY + deltaY * 0.4f
                 val controlX2 = rightX - deltaX * 0.2f
@@ -494,7 +455,6 @@ class HuffmanTreeView @JvmOverloads constructor(
 
             canvas.drawPath(path, connectionPaint)
 
-            // Draw "1" label with better positioning
             val midX = (nodeX + rightX) / 2 + 25
             val midY = (nodeY + rightY) / 2 - 15
             val labelColor = if (isHighlighted && isRightHighlighted) {
@@ -517,7 +477,6 @@ class HuffmanTreeView @JvmOverloads constructor(
 
         val isHighlighted = highlightedPath.contains(node)
 
-        // Calculate rectangle bounds
         val left = nodeX - nodeWidth / 2
         val top = nodeY - nodeHeight / 2
         val right = nodeX + nodeWidth / 2
@@ -525,7 +484,6 @@ class HuffmanTreeView @JvmOverloads constructor(
 
         val rect = RectF(left, top, right, bottom)
 
-        // Use different colors for highlighted nodes
         val fillPaint = if (isHighlighted) {
             Paint(nodePaint).apply {
                 color = ContextCompat.getColor(context, R.color.primary_container)
@@ -539,7 +497,6 @@ class HuffmanTreeView @JvmOverloads constructor(
             }
         } else nodeStrokePaint
 
-        // Draw shadow for better visual depth
         val shadowPaint = Paint(nodePaint).apply {
             color = Color.BLACK
             alpha = 30
@@ -549,25 +506,18 @@ class HuffmanTreeView @JvmOverloads constructor(
             12f, 12f, shadowPaint
         )
 
-        // Draw node rectangle with rounded corners
         canvas.drawRoundRect(rect, 12f, 12f, fillPaint)
         canvas.drawRoundRect(rect, 12f, 12f, strokePaint)
 
-        // Draw node text
         val nodeText = if (node.character != null) {
-            when (node.character) {
-                ' ' -> "_"
-                else -> node.character.toString()
-            }
+            node.character.toString()
         } else {
-            // Show combined characters for internal nodes
-            node.nodeId.take(6)
+            node.nodeId
         }
 
         val frequencyText = node.frequency.toString()
 
-        // Use different text color for highlighted nodes
-        val mainTextPaint = if (isHighlighted) {
+        val baseTextPaint = if (isHighlighted) {
             Paint(textPaint).apply {
                 color = ContextCompat.getColor(context, R.color.primary)
                 style = Paint.Style.FILL_AND_STROKE
@@ -575,10 +525,18 @@ class HuffmanTreeView @JvmOverloads constructor(
             }
         } else textPaint
 
-        // Draw character/node id
-        canvas.drawText(nodeText, nodeX, nodeY - 8, mainTextPaint)
+        // Adjust font size based on nodeText length for better readability
+        val adjustedTextPaint = Paint(baseTextPaint).apply {
+            textSize = when {
+                nodeText.length <= 3 -> 28f
+                nodeText.length <= 6 -> 22f
+                nodeText.length <= 10 -> 18f
+                else -> 14f
+            }
+        }
 
-        // Draw frequency
+        canvas.drawText(nodeText, nodeX, nodeY - 8, adjustedTextPaint)
+
         val smallTextPaint = Paint(textPaint).apply {
             textSize = 20f
             color = if (isHighlighted) {
@@ -589,7 +547,6 @@ class HuffmanTreeView @JvmOverloads constructor(
         }
         canvas.drawText("($frequencyText)", nodeX, nodeY + 20, smallTextPaint)
 
-        // Recursively draw child nodes
         if (!node.isLeaf()) {
             node.left?.let { drawNodes(canvas, it) }
             node.right?.let { drawNodes(canvas, it) }

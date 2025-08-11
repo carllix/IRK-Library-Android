@@ -54,7 +54,6 @@ class HuffmanFragment : Fragment() {
     private lateinit var tvEncodedText: TextView
     private lateinit var btnCopyEncoded: MaterialButton
 
-    // Expansion states
     private var isTreeExpanded = false
     private var isStepsExpanded = false
     private var isEncodingExpanded = false
@@ -109,14 +108,12 @@ class HuffmanFragment : Fragment() {
     }
 
     private fun setupRecyclerViews() {
-        // Construction steps RecyclerView
         stepsAdapter = ConstructionStepsAdapter()
         rvConstructionSteps.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = stepsAdapter
         }
 
-        // Code table RecyclerView with click listener
         codeAdapter = HuffmanCodeAdapter { character ->
             huffmanTreeView.highlightCharacterPath(character)
         }
@@ -159,7 +156,6 @@ class HuffmanFragment : Fragment() {
             copyToClipboard(tvEncodedText.text.toString(), "Encoded text")
         }
 
-        // Expansion click listeners
         llTreeHeader.setOnClickListener { toggleTreeExpansion() }
         llStepsHeader.setOnClickListener { toggleStepsExpansion() }
         llEncodingHeader.setOnClickListener { toggleEncodingExpansion() }
@@ -190,19 +186,11 @@ class HuffmanFragment : Fragment() {
     }
 
     private fun displayResults(result: com.irklibrary.app.data.models.HuffmanResult) {
-        // Update tree view with codes
         huffmanTreeView.setHuffmanTree(result.huffmanTree)
-
-        // Update construction steps
         stepsAdapter.updateSteps(result.constructionSteps)
-
-        // Update code table
         codeAdapter.updateCodes(result.huffmanCodes)
-
-        // Update encoded text
         tvEncodedText.text = result.encodedText
 
-        // Auto-expand first section for better UX
         if (!isTreeExpanded) {
             toggleTreeExpansion()
         }

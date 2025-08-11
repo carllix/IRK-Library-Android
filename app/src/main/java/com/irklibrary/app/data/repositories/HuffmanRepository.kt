@@ -8,13 +8,10 @@ class HuffmanRepository {
     fun buildHuffmanTree(text: String): HuffmanResult {
         val frequencies = calculateFrequencies(text)
 
-        // 2. Build Huffman tree with step tracking
         val (root, steps) = buildTreeWithSteps(frequencies)
 
-        // 3. Generate Huffman codes
         val codes = generateCodes(root)
 
-        // 4. Encode text
         val encodedText = encodeText(text, codes)
 
         return HuffmanResult(
@@ -43,20 +40,22 @@ class HuffmanRepository {
         val priorityQueue = PriorityQueue<HuffmanNode>()
 
         frequencies.forEach { freq ->
-            priorityQueue.offer(HuffmanNode(freq.character, freq.frequency, nodeId = freq.character.toString()))
+            val character = if (freq.character == ' ') '_' else freq.character
+            priorityQueue.offer(HuffmanNode(character, freq.frequency, nodeId = character.toString()))
         }
 
         var stepCounter = 1
 
-        // Urutkan frekuensi dari kecil ke besar
+        val initialTrees = priorityQueue.toList().sortedBy { it.frequency }
         steps.add(
             HuffmanTreeStep(
                 stepNumber = stepCounter++,
                 description = "Urutkan simbol berdasarkan frekuensi dari kecil ke besar",
-                availableNodes = priorityQueue.toList(),
+                availableNodes = initialTrees,
                 selectedNodes = emptyList(),
                 newNode = null,
-                currentTree = null
+                currentTree = null,
+                currentTrees = initialTrees
             )
         )
 
@@ -65,16 +64,8 @@ class HuffmanRepository {
             val left = priorityQueue.poll()!!
             val right = priorityQueue.poll()!!
 
-            val combinedFreq = (left.frequency) + (right.frequency)
-            val parentNodeId = if (left.character != null && right.character != null) {
-                "${left.character}${right.character}"
-            } else if (left.character != null) {
-                "${left.character}${right.nodeId}"
-            } else if (right.character != null) {
-                "${left.nodeId}${right.character}"
-            } else {
-                "${left.nodeId}${right.nodeId}"
-            }
+            val combinedFreq = left.frequency + right.frequency
+            val parentNodeId = "${left.nodeId}${right.nodeId}"
 
             val parentNode = HuffmanNode(
                 character = null,
@@ -84,32 +75,35 @@ class HuffmanRepository {
                 nodeId = parentNodeId
             )
 
+            priorityQueue.offer(parentNode)
+
+            val currentTrees = priorityQueue.toList().sortedBy { it.frequency }
+
             steps.add(
                 HuffmanTreeStep(
                     stepNumber = stepCounter++,
                     description = "Gabungkan ${left.nodeId} (${left.frequency}) dan ${right.nodeId} (${right.frequency}) " +
                             "menjadi ${parentNode.nodeId} (${parentNode.frequency}), tempatkan simbol baru ${parentNode.nodeId} di dalam urutan terurut",
-                    availableNodes = priorityQueue.toList(),
+                    availableNodes = currentTrees,
                     selectedNodes = listOf(left, right),
                     newNode = parentNode,
-                    currentTree = parentNode
+                    currentTree = parentNode,
+                    currentTrees = currentTrees
                 )
             )
-
-            priorityQueue.offer(parentNode)
         }
 
         val root = priorityQueue.poll()!!
 
-        // Beri label
         steps.add(
             HuffmanTreeStep(
                 stepNumber = stepCounter,
-                description = "Simbol sudah habis. Stop. Pohon Huffman sudah terbentuk. Kemudian, sisi-sisi kiri di dalam pohon Huffam diberi label 0, sisi-sisi kanan diberi label 1 ",
+                description = "Simbol sudah habis. Stop. Pohon Huffman sudah terbentuk. Kemudian, sisi-sisi kiri di dalam pohon Huffman diberi label 0, sisi-sisi kanan diberi label 1",
                 availableNodes = emptyList(),
                 selectedNodes = emptyList(),
                 newNode = null,
-                currentTree = root
+                currentTree = root,
+                currentTrees = listOf(root)
             )
         )
 

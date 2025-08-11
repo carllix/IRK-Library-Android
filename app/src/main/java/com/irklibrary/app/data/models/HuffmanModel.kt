@@ -31,7 +31,8 @@ data class HuffmanTreeStep(
     val availableNodes: List<HuffmanNode>,
     val selectedNodes: List<HuffmanNode>,
     val newNode: HuffmanNode?,
-    val currentTree: HuffmanNode?
+    val currentTree: HuffmanNode?,
+    val currentTrees: List<HuffmanNode> = emptyList()
 )
 
 data class HuffmanResult(
