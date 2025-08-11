@@ -43,7 +43,10 @@ class HuffmanNodeAdapter(
 
         fun bind(node: HuffmanNode, highlightStyle: NodeHighlightStyle) {
             tvNodeCharacter.text = when {
-                node.character != null -> node.character.toString()
+                node.character != null -> {
+                    // Use nodeId for display (which handles space as underscore)
+                    node.nodeId
+                }
                 else -> {
                     if (node.nodeId.length <= 3) {
                         node.nodeId
@@ -161,7 +164,8 @@ class HuffmanCodeAdapter(
         private val tvHuffmanCode: TextView = itemView.findViewById(R.id.tv_huffman_code)
 
         fun bind(code: HuffmanCode, onCharacterClick: (Char) -> Unit) {
-            tvCharacter.text = code.character.toString()
+            val displayChar = if (code.character == ' ') "_" else code.character.toString()
+            tvCharacter.text = displayChar
 
             tvFrequency.text = code.frequency.toString()
             tvHuffmanCode.text = code.code

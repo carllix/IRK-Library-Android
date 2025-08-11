@@ -14,13 +14,19 @@ class HuffmanRepository {
 
         val encodedText = encodeText(text, codes)
 
+        val decodingSteps = generateDecodingSteps(encodedText, codes)
+
+        val compressionInfo = calculateCompressionInfo(text, encodedText)
+
         return HuffmanResult(
             originalText = text,
             characterFrequencies = frequencies,
             huffmanCodes = codes,
             huffmanTree = root,
             constructionSteps = steps,
-            encodedText = encodedText
+            encodedText = encodedText,
+            decodingSteps = decodingSteps,
+            compressionInfo = compressionInfo
         )
     }
 
@@ -40,8 +46,12 @@ class HuffmanRepository {
         val priorityQueue = PriorityQueue<HuffmanNode>()
 
         frequencies.forEach { freq ->
-            val character = if (freq.character == ' ') '_' else freq.character
-            priorityQueue.offer(HuffmanNode(character, freq.frequency, nodeId = character.toString()))
+            val displayChar = if (freq.character == ' ') '_' else freq.character
+            priorityQueue.offer(HuffmanNode(
+                character = freq.character,
+                frequency = freq.frequency,
+                nodeId = displayChar.toString()
+            ))
         }
 
         var stepCounter = 1
@@ -140,5 +150,84 @@ class HuffmanRepository {
         return text.map { char ->
             codeMap[char]?.code ?: ""
         }.joinToString("")
+    }
+
+    private fun generateDecodingSteps(encodedText: String, codes: List<HuffmanCode>): List<DecodingStep> {
+        val decodingSteps = mutableListOf<DecodingStep>()
+        val codeToCharMap = codes.associateBy { it.code }
+
+        var remainingBits = encodedText
+        var currentDecoded = ""
+        var stepCounter = 1
+
+        while (remainingBits.isNotEmpty()) {
+            var currentBits = ""
+            var foundMatch = false
+
+            for (i in 1..remainingBits.length) {
+                currentBits = remainingBits.substring(0, i)
+
+                if (codeToCharMap.containsKey(currentBits)) {
+                    val character = codeToCharMap[currentBits]!!.character
+                    currentDecoded += character
+                    val newRemainingBits = remainingBits.substring(i)
+                    foundMatch = true
+
+                    val displayChar = if (character == ' ') "spasi" else "'$character'"
+                    val description = "Baca simbol biner '$currentBits', " +
+                            "cocok dengan kode untuk karakter $displayChar. " +
+                            "Decode: '$currentBits' → $displayChar"
+
+                    decodingSteps.add(
+                        DecodingStep(
+                            stepNumber = stepCounter++,
+                            currentBits = currentBits,
+                            matchedCode = currentBits,
+                            decodedCharacter = character,
+                            remainingBits = newRemainingBits,
+                            currentDecoded = currentDecoded,
+                            description = description
+                        )
+                    )
+
+                    remainingBits = newRemainingBits
+                    break
+                }
+            }
+
+            if (!foundMatch) {
+                if (remainingBits.isNotEmpty()) {
+                    remainingBits = remainingBits.substring(1)
+                }
+            }
+        }
+
+        return decodingSteps
+    }
+
+    private fun calculateCompressionInfo(originalText: String, encodedText: String): CompressionInfo {
+        val originalSizeBits = originalText.length * 8
+        val compressedSizeBits = encodedText.length
+
+        val compressionRatio = if (originalSizeBits > 0) {
+            (compressedSizeBits.toDouble() / originalSizeBits.toDouble()) * 100.0
+        } else {
+            0.0
+        }
+
+        val spaceSavedBits = originalSizeBits - compressedSizeBits
+        val spaceSavedPercentage = if (originalSizeBits > 0) {
+            (spaceSavedBits.toDouble() / originalSizeBits.toDouble()) * 100.0
+        } else {
+            0.0
+        }
+
+        return CompressionInfo(
+            originalSizeBits = originalSizeBits,
+            compressedSizeBits = compressedSizeBits,
+            compressionRatio = compressionRatio,
+            spaceSavedBits = spaceSavedBits,
+            spaceSavedPercentage = spaceSavedPercentage
+        )
     }
 }

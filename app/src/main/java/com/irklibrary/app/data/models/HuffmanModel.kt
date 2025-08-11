@@ -35,6 +35,24 @@ data class HuffmanTreeStep(
     val currentTrees: List<HuffmanNode> = emptyList()
 )
 
+data class DecodingStep(
+    val stepNumber: Int,
+    val currentBits: String,
+    val matchedCode: String,
+    val decodedCharacter: Char,
+    val remainingBits: String,
+    val currentDecoded: String,
+    val description: String
+)
+
+data class CompressionInfo(
+    val originalSizeBits: Int,
+    val compressedSizeBits: Int,
+    val compressionRatio: Double,
+    val spaceSavedBits: Int,
+    val spaceSavedPercentage: Double
+)
+
 data class HuffmanResult(
     val originalText: String,
     val characterFrequencies: List<CharacterFrequency>,
@@ -42,4 +60,6 @@ data class HuffmanResult(
     val huffmanTree: HuffmanNode,
     val constructionSteps: List<HuffmanTreeStep>,
     val encodedText: String,
+    val decodingSteps: List<DecodingStep>,
+    val compressionInfo: CompressionInfo
 )

@@ -187,7 +187,7 @@ class MiniTreeView @JvmOverloads constructor(
         canvas.drawRoundRect(rect, 4f, 4f, nodeStrokePaint)
 
         val nodeText = if (node.character != null) {
-            node.character.toString()
+            node.nodeId
         } else {
             node.nodeId
         }

@@ -59,7 +59,6 @@ class HuffmanTreeView @JvmOverloads constructor(
     private var highlightedPath = mutableListOf<HuffmanNode>()
     private var selectedCharacter: Char? = null
 
-    // Pan and Zoom variables
     private var scaleFactor = 1f
     private var translateX = 0f
     private var translateY = 0f
@@ -135,7 +134,6 @@ class HuffmanTreeView @JvmOverloads constructor(
     }
 
     private fun adjustForCollisions() {
-        // Group nodes by level
         val nodesByLevel = mutableMapOf<Int, MutableList<Pair<HuffmanNode, Float>>>()
 
         nodePositions.forEach { (node, pos) ->
@@ -143,11 +141,9 @@ class HuffmanTreeView @JvmOverloads constructor(
             nodesByLevel.computeIfAbsent(level) { mutableListOf() }.add(node to pos.first)
         }
 
-        // Sort nodes by X position in each level and adjust spacing
         nodesByLevel.forEach { (level, nodes) ->
             nodes.sortBy { it.second }
 
-            // Adjust X positions to maintain minimum spacing
             for (i in 1 until nodes.size) {
                 val currentNode = nodes[i].first
                 val prevNode = nodes[i - 1].first
@@ -160,7 +156,6 @@ class HuffmanTreeView @JvmOverloads constructor(
                     val adjustment = minRequiredX - currentPos.first
                     adjustNodeAndDescendants(currentNode, adjustment, 0f)
 
-                    // Update the sorted list
                     for (j in i until nodes.size) {
                         val nodeToUpdate = nodes[j].first
                         val updatedPos = nodePositions[nodeToUpdate]!!
@@ -192,7 +187,6 @@ class HuffmanTreeView @JvmOverloads constructor(
         val currentPos = nodePositions[node] ?: return
         nodePositions[node] = Pair(currentPos.first + deltaX, currentPos.second + deltaY)
 
-        // Recursively adjust descendants
         if (!node.isLeaf()) {
             node.left?.let { adjustNodeAndDescendants(it, deltaX, deltaY) }
             node.right?.let { adjustNodeAndDescendants(it, deltaX, deltaY) }
@@ -209,7 +203,6 @@ class HuffmanTreeView @JvmOverloads constructor(
         val leftWidth = node.left?.let { calculateSubtreeWidths(it) } ?: 0f
         val rightWidth = node.right?.let { calculateSubtreeWidths(it) } ?: 0f
 
-        // Ensure minimum spacing between subtrees
         val totalWidth = leftWidth + rightWidth + minLevelSpacing
         val minRequiredWidth = max(totalWidth, nodeWidth + minNodeSpacing)
 
@@ -223,22 +216,18 @@ class HuffmanTreeView @JvmOverloads constructor(
         if (!node.isLeaf()) {
             val nextY = y + levelHeight
 
-            // Get subtree widths
             val leftSubtreeWidth = node.left?.let { nodeSubtreeWidths[it] } ?: 0f
             val rightSubtreeWidth = node.right?.let { nodeSubtreeWidths[it] } ?: 0f
 
-            // Calculate optimal spacing to prevent overlapping
             val totalSpacing = leftSubtreeWidth + rightSubtreeWidth + minLevelSpacing
             val halfSpacing = totalSpacing / 2
 
-            // Position left child with enough space
             node.left?.let { leftChild ->
                 val leftOffset = leftSubtreeWidth / 2
                 val leftX = x - halfSpacing + leftOffset
                 positionNodeOptimal(leftChild, leftX, nextY, level + 1)
             }
 
-            // Position right child with enough space
             node.right?.let { rightChild ->
                 val rightOffset = rightSubtreeWidth / 2
                 val rightX = x + halfSpacing - rightOffset
@@ -262,7 +251,6 @@ class HuffmanTreeView @JvmOverloads constructor(
             maxY = max(maxY, y + nodeHeight / 2)
         }
 
-        // Add generous padding to ensure all nodes can be viewed
         val padding = 150f
         treeBounds = RectF(minX - padding, minY - padding, maxX + padding, maxY + padding)
     }
@@ -510,7 +498,7 @@ class HuffmanTreeView @JvmOverloads constructor(
         canvas.drawRoundRect(rect, 12f, 12f, strokePaint)
 
         val nodeText = if (node.character != null) {
-            node.character.toString()
+            node.nodeId
         } else {
             node.nodeId
         }
@@ -525,7 +513,6 @@ class HuffmanTreeView @JvmOverloads constructor(
             }
         } else textPaint
 
-        // Adjust font size based on nodeText length for better readability
         val adjustedTextPaint = Paint(baseTextPaint).apply {
             textSize = when {
                 nodeText.length <= 3 -> 28f

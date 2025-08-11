@@ -30,7 +30,6 @@ class HuffmanFragment : Fragment() {
     private lateinit var btnClear: MaterialButton
     private lateinit var progressBar: LinearProgressIndicator
     private lateinit var llResultsContainer: LinearLayout
-    private lateinit var tvCompressionInfo: TextView
 
     // Tree Animation Section
     private lateinit var llTreeHeader: LinearLayout
@@ -54,9 +53,26 @@ class HuffmanFragment : Fragment() {
     private lateinit var tvEncodedText: TextView
     private lateinit var btnCopyEncoded: MaterialButton
 
+    // Decoding Section
+    private lateinit var llDecodingHeader: LinearLayout
+    private lateinit var ivDecodingExpand: ImageView
+    private lateinit var llDecodingContent: LinearLayout
+    private lateinit var rvDecodingSteps: RecyclerView
+    private lateinit var decodingAdapter: DecodingStepsAdapter
+
+    // Compression Ratio Section
+    private lateinit var llCompressionHeader: LinearLayout
+    private lateinit var ivCompressionExpand: ImageView
+    private lateinit var llCompressionContent: LinearLayout
+    private lateinit var tvOriginalSize: TextView
+    private lateinit var tvCompressedSize: TextView
+    private lateinit var tvCompressionRatio: TextView
+
     private var isTreeExpanded = false
     private var isStepsExpanded = false
     private var isEncodingExpanded = false
+    private var isDecodingExpanded = false
+    private var isCompressionExpanded = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,7 +100,6 @@ class HuffmanFragment : Fragment() {
         btnClear = view.findViewById(R.id.btn_clear)
         progressBar = view.findViewById(R.id.progress_bar)
         llResultsContainer = view.findViewById(R.id.ll_results_container)
-//        tvCompressionInfo = view.findViewById(R.id.tv_compression_info)
 
         // Tree animation section
         llTreeHeader = view.findViewById(R.id.ll_tree_header)
@@ -105,6 +120,20 @@ class HuffmanFragment : Fragment() {
         rvCodeTable = view.findViewById(R.id.rv_code_table)
         tvEncodedText = view.findViewById(R.id.tv_encoded_text)
         btnCopyEncoded = view.findViewById(R.id.btn_copy_encoded)
+
+        // Decoding section
+        llDecodingHeader = view.findViewById(R.id.ll_decoding_header)
+        ivDecodingExpand = view.findViewById(R.id.iv_decoding_expand)
+        llDecodingContent = view.findViewById(R.id.ll_decoding_content)
+        rvDecodingSteps = view.findViewById(R.id.rv_decoding_steps)
+
+        // Compression ratio section
+        llCompressionHeader = view.findViewById(R.id.ll_compression_header)
+        ivCompressionExpand = view.findViewById(R.id.iv_compression_expand)
+        llCompressionContent = view.findViewById(R.id.ll_compression_content)
+        tvOriginalSize = view.findViewById(R.id.tv_original_size)
+        tvCompressedSize = view.findViewById(R.id.tv_compressed_size)
+        tvCompressionRatio = view.findViewById(R.id.tv_compression_ratio)
     }
 
     private fun setupRecyclerViews() {
@@ -120,6 +149,12 @@ class HuffmanFragment : Fragment() {
         rvCodeTable.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = codeAdapter
+        }
+
+        decodingAdapter = DecodingStepsAdapter()
+        rvDecodingSteps.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = decodingAdapter
         }
     }
 
@@ -159,6 +194,8 @@ class HuffmanFragment : Fragment() {
         llTreeHeader.setOnClickListener { toggleTreeExpansion() }
         llStepsHeader.setOnClickListener { toggleStepsExpansion() }
         llEncodingHeader.setOnClickListener { toggleEncodingExpansion() }
+        llDecodingHeader.setOnClickListener { toggleDecodingExpansion() }
+        llCompressionHeader.setOnClickListener { toggleCompressionExpansion() }
     }
 
     private fun observeViewModel() {
@@ -186,14 +223,24 @@ class HuffmanFragment : Fragment() {
     }
 
     private fun displayResults(result: com.irklibrary.app.data.models.HuffmanResult) {
+        // Display tree and steps (existing functionality)
         huffmanTreeView.setHuffmanTree(result.huffmanTree)
         stepsAdapter.updateSteps(result.constructionSteps)
         codeAdapter.updateCodes(result.huffmanCodes)
         tvEncodedText.text = result.encodedText
 
+        decodingAdapter.updateSteps(result.decodingSteps)
+        displayCompressionInfo(result.compressionInfo)
+
         if (!isTreeExpanded) {
             toggleTreeExpansion()
         }
+    }
+
+    private fun displayCompressionInfo(compressionInfo: com.irklibrary.app.data.models.CompressionInfo) {
+        tvOriginalSize.text = getString(R.string.huffman_bits_format, compressionInfo.originalSizeBits)
+        tvCompressedSize.text = getString(R.string.huffman_bits_format, compressionInfo.compressedSizeBits)
+        tvCompressionRatio.text = getString(R.string.huffman_percentage_format, compressionInfo.compressionRatio)
     }
 
     private fun toggleTreeExpansion() {
@@ -209,6 +256,16 @@ class HuffmanFragment : Fragment() {
     private fun toggleEncodingExpansion() {
         isEncodingExpanded = !isEncodingExpanded
         animateExpansion(llEncodingContent, ivEncodingExpand, isEncodingExpanded)
+    }
+
+    private fun toggleDecodingExpansion() {
+        isDecodingExpanded = !isDecodingExpanded
+        animateExpansion(llDecodingContent, ivDecodingExpand, isDecodingExpanded)
+    }
+
+    private fun toggleCompressionExpansion() {
+        isCompressionExpanded = !isCompressionExpanded
+        animateExpansion(llCompressionContent, ivCompressionExpand, isCompressionExpanded)
     }
 
     private fun animateExpansion(targetView: View, arrowView: ImageView, isExpanding: Boolean) {
