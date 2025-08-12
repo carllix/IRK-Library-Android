@@ -8,9 +8,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.irklibrary.app.R
-import com.irklibrary.app.ui.page1.MatrixFragment
+import com.irklibrary.app.ui.page1.MatrixSPLFragment
 import com.irklibrary.app.ui.page2.CryptographyFragment
 import com.irklibrary.app.ui.page3.HuffmanFragment
+import com.irklibrary.app.ui.page5.AboutFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,16 +42,17 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, MatrixFragment())
+                .replace(R.id.fragment_container, MatrixSPLFragment())
                 .commit()
             navigationView.setCheckedItem(R.id.nav_page1)
         }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_page1 -> replaceFragment(MatrixFragment())
+                R.id.nav_page1 -> replaceFragment(MatrixSPLFragment())
                 R.id.nav_page2 -> replaceFragment(CryptographyFragment())
                 R.id.nav_page3 -> replaceFragment(HuffmanFragment())
+                R.id.nav_page5 -> replaceFragment(AboutFragment())
             }
             drawerLayout.closeDrawers()
             true
