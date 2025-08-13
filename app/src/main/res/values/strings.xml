@@ -5,16 +5,24 @@
     <string name="spl_matrix">SPL &amp; Matrix</string>
     <string name="cryptography">Cryptography</string>
     <string name="huffman"> Huffman Coding</string>
-    <string name="nav_other_section">Lainnya</string>
 
     <!-- About -->
     <string name="about">About</string>
-    <string name="info">Nama saya Carlo Angkisan dengan NIM 13523091</string>
-    <string name="reason">Aplikasi ini dibuat untuk memenuhi Tugas Seleksi IRK yang diberikan oleh Kak Eka. Selain itu, saya tertarik karena poin yang didapatkan cukup besar dan juga tertarik untuk belajar Android Development karena project-project sebelumnya hanya web development dan tidak jauh-jauh dari ekosistem react</string>
-    <string name="vision">Menjadikan IRK ....</string>
-    <string name="mission">1. bjvjfhbjb 2. jfg kghreh</string>
-    <string name="email">carloangkisan21@gmail.com</string>
-    <string name="github">carllix</string>
+    <string name="about_name">Carlo Angkisan</string>
+    <string name="about_nim">NIM: 13523091</string>
+    <string name="about_description">Mahasiswa Teknik Informatika ITB yang memiliki ketertarikan dalam Software Engineering, Machine Learning, dan Data Science. Pecinta Matcha dan memiliki motto hidup <i>&quot;Enjoy your life, enjoy your food&quot;</i>.</string>
+    <string name="about_motivation">Motivasi Pembuatan Aplikasi</string>
+    <string name="about_motivation_content">Aplikasi ini dibuat untuk memenuhi Tugas Seleksi IRK yang diberikan oleh Kak Eka. Selain itu, saya tertarik karena poin yang didapatkan cukup besar dan juga ingin belajar Android Development karena project-project sebelumnya hanya web development dan tidak jauh-jauh dari ekosistem React.</string>
+    <string name="about_vision">Visi Menjadi Asisten Lab IRK</string>
+    <string name="about_vision_content">Membantu mahasiswa dalam memahami konsep-konsep dan aplikasi nyata dari materi yang diajarkan pada perkuliahan</string>
+    <string name="about_mission">Misi Menjadi Asisten Lab IRK</string>
+    <string name="about_mission_content">1. Merancang Tugas Besar yang seru dan bermanfaat untuk memperdalam pemahaman materi di kelas.\n2. Mendorong mahasiswa untuk mengeksplorasi berbagai tech stack mealui Tugas Besar yang diberikan.\n3. Membantu mahasiswa memahami materi saat sesi demo maupun asistensi dengan penjelasan yang jelas dan mudah dipahami.\n4. Membuat kuis Matematika Diskrit yang menantang.</string>
+    <string name="about_contact">Kontak Saya</string>
+    <string name="about_email">carloangkisan21@gmail.com</string>
+    <string name="about_line_id">crlo21</string>
+    <string name="about_instagram">carlooangkisan</string>
+    <string name="about_linkedin">carloangkisan</string>
+    <string name="about_icon">Ikon</string>
 
     <!-- Cryptography strings -->
     <string name="cryptography_title">Cryptography</string>
@@ -117,48 +125,6 @@
     <string name="huffman_error_whitespace_only">Input tidak boleh hanya spasi</string>
     <string name="huffman_error_processing">Terjadi kesalahan saat memproses</string>
 
-    <!-- About Page strings -->
-    <string name="about_title">Tentang Saya</string>
-    <string name="about_name">Carlo Angkisan</string>
-    <string name="about_nim">NIM: 13523091</string>
-    <string name="about_description">Mahasiswa Teknik Informatika ITB yang passionate dalam pengembangan software, teknologi, dan inovasi. Tertarik dengan Android Development, Machine Learning, dan Web Development.</string>
-
-    <!-- About - Motivation -->
-    <string name="about_motivation_title">Motivasi Pembuatan Aplikasi</string>
-    <string name="about_motivation_content">Aplikasi ini dibuat untuk memenuhi Tugas Seleksi IRK yang diberikan oleh Kak Eka. Selain itu, saya tertarik karena poin yang didapatkan cukup besar dan juga ingin belajar Android Development karena project-project sebelumnya hanya web development dan tidak jauh-jauh dari ekosistem React. Melalui aplikasi ini, saya ingin menunjukkan kemampuan dalam mengimplementasikan algoritma kompleks seperti Huffman Coding dan Cryptography dalam platform mobile.</string>
-
-    <!-- About - Vision & Mission -->
-    <string name="about_vision_title">Visi Menjadi Asisten Lab IRK</string>
-    <string name="about_vision_content">Menjadi asisten laboratorium yang dapat membantu mahasiswa memahami konsep-konsep kompleks dalam bidang computational science dan algorithms dengan cara yang mudah dipahami dan aplikatif.</string>
-
-    <string name="about_mission_title">Misi Menjadi Asisten Lab IRK</string>
-    <string name="about_mission_content">1. Membantu mahasiswa dalam memahami algoritma dan struktur data melalui implementasi praktis\n2. Mengembangkan tools dan aplikasi edukatif yang mendukung pembelajaran\n3. Memberikan mentoring berkualitas dalam bidang programming dan problem solving\n4. Berkontribusi dalam research dan development di laboratorium IRK</string>
-
-    <!-- About - Contact -->
-    <string name="about_contact_title">Hubungi Saya</string>
-    <string name="about_email">carloangkisan21@gmail.com</string>
-    <string name="about_line_id">carlo.angkisan</string>
-    <string name="about_instagram_username">`@carloangkisann</string>
-
-    <!-- About - URLs -->
-    <string name="about_github_url">https://github.com/carllix</string>
-    <string name="about_linkedin_url">https://linkedin.com/in/carlo-angkisan</string>
-
-    <!-- About - Content Descriptions -->
-    <string name="about_profile_photo_desc">Foto profil Carlo Angkisan</string>
-    <string name="about_github_desc">GitHub profile</string>
-    <string name="about_linkedin_desc">LinkedIn profile</string>
-    <string name="about_motivation_icon">Ikon motivasi</string>
-    <string name="about_vision_icon">Ikon visi</string>
-    <string name="about_mission_icon">Ikon misi</string>
-    <string name="about_contact_icon">Ikon kontak</string>
-    <string name="about_email_icon">Ikon email</string>
-    <string name="about_line_icon">Ikon Line</string>
-    <string name="about_instagram_icon">Ikon Instagram</string>
-
-    <!-- About - Footer -->
-    <string name="about_footer">Made with ❤️ for IRK Laboratory Selection\n© 2024 Carlo Angkisan</string>
-
     <!-- SPL & Matrix Page strings -->
     <string name="spl_matrix_title">SPL &amp; Matrix Operations</string>
     <string name="spl_mode">SPL</string>
@@ -253,5 +219,10 @@
     <string name="error_spl_size_out_of_range">Ukuran SPL harus antara 2-20</string>
     <string name="input_numbers_only">Hanya angka yang diizinkan</string>
     <string name="input_negative_help">Tip: Untuk angka negatif, ketik tanda - di awal</string>
+
+    <!-- References -->
+    <string name="references">References</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -21,6 +21,84 @@
             android:textAlignment="center"
             android:layout_marginBottom="20dp" />
 
+        <!-- Auto Solve Toggle Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp"
+            app:cardBackgroundColor="@color/surface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Auto Solve Toggle Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Auto Solve"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/on_surface" />
+
+                        <TextView
+                            android:id="@+id/textAutoSolveDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Solutions appear automatically as you type"
+                            android:textSize="12sp"
+                            android:textColor="@color/on_surface_variant"
+                            android:layout_marginTop="2dp" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchAutoSolve"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:layout_marginStart="16dp"
+                        app:thumbTint="@color/switch_thumb"
+                        app:trackTint="@color/switch_track_color"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp" />
+
+                </LinearLayout>
+
+                <!-- Auto Solve Progress -->
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressAutoSolve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/secondary"
+                    app:trackThickness="3dp"
+                    android:indeterminate="true" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Mode Selection Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -368,7 +446,7 @@
                             android:layout_height="48dp"
                             android:layout_weight="1"
                             android:layout_marginStart="4dp"
-                            android:text="A^n"
+                            android:text="Eksponen"
                             android:textSize="12sp"
                             android:textColor="@color/primary"
                             app:cornerRadius="24dp"
@@ -704,13 +782,14 @@
             android:layout_marginBottom="20dp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSolve"
+                android:id="@+id/btnManualSolve"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Solve"
-                android:textColor="@color/white"
                 android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                android:textColor="@color/white"
                 app:backgroundTint="@color/primary"
                 style="@style/Widget.Material3.Button.TonalButton" />
 
@@ -734,29 +813,6 @@
             android:visibility="gone"
             app:indicatorColor="@color/primary"
             app:trackThickness="4dp" />
-
-        <!-- Error Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardError"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="#FFEBEE"
-            app:strokeWidth="0dp">
-
-            <TextView
-                android:id="@+id/textError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:textColor="#C62828"
-                android:textSize="14sp"
-                android:gravity="center" />
-
-        </com.google.android.material.card.MaterialCardView>
 
         <!-- Results Section -->
         <LinearLayout

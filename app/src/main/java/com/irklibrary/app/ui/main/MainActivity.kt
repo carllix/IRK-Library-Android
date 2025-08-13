@@ -11,6 +11,7 @@ import com.irklibrary.app.R
 import com.irklibrary.app.ui.page1.MatrixSPLFragment
 import com.irklibrary.app.ui.page2.CryptographyFragment
 import com.irklibrary.app.ui.page3.HuffmanFragment
+import com.irklibrary.app.ui.page4.ReferencesFragment
 import com.irklibrary.app.ui.page5.AboutFragment
 
 class MainActivity : AppCompatActivity() {
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_page1 -> replaceFragment(MatrixSPLFragment())
                 R.id.nav_page2 -> replaceFragment(CryptographyFragment())
                 R.id.nav_page3 -> replaceFragment(HuffmanFragment())
+                R.id.nav_page4 -> replaceFragment(ReferencesFragment())
                 R.id.nav_page5 -> replaceFragment(AboutFragment())
             }
             drawerLayout.closeDrawers()

@@ -11,6 +11,12 @@
         <item
             android:id="@+id/nav_page3"
             android:title="@string/huffman" />
+        <item
+            android:id="@+id/nav_page4"
+            android:title="@string/references"/>
+        <item
+            android:id="@+id/nav_page5"
+            android:title="@string/about"/>
     </group>
 
 </menu>
