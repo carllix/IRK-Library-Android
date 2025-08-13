@@ -3,8 +3,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="spl_matrix">SPL &amp; Matrix</string>
-    <string name="cryptography">Cryptography</string>
     <string name="huffman"> Huffman Coding</string>
+    <string name="clear">Clear</string>
 
     <!-- About -->
     <string name="about">About</string>
@@ -33,39 +33,31 @@
     <string name="search_not_found">Tidak ada slide ditemukan</string>
     <string name="see_slide">Lihat</string>
 
-    <!-- Cryptography strings -->
-    <string name="cryptography_title">Cryptography</string>
+    <!-- Cryptography -->
+    <string name="cryptography">Cryptography</string>
     <string name="caesar_cipher">Caesar Cipher</string>
     <string name="rsa">RSA</string>
-    <string name="input_text_hint">Input Text (Semua karakter ASCII)</string>
+    <string name="input_text_crypto_hint">Input Text</string>
     <string name="shift_value_hint">Nilai Pergeseran</string>
-    <string name="result_hint">Hasil</string>
     <string name="encrypt">Encrypt</string>
     <string name="decrypt">Decrypt</string>
+    <string name="result_hint">Hasil</string>
     <string name="show_steps">Tampilkan Step-by-Step Process</string>
     <string name="hide_steps">Sembunyikan Step-by-Step Process</string>
     <string name="copy_result">Salin Hasil</string>
     <string name="copy_steps">Salin Steps</string>
     <string name="step_by_step_title">Step-by-Step Process:</string>
     <string name="rsa_placeholder">Ini halaman RSA\n\n(Akan diimplementasikan selanjutnya)</string>
-
-    <!-- Copy messages -->
     <string name="copy_success_result">Hasil berhasil disalin ke clipboard</string>
     <string name="copy_success_steps">Steps berhasil disalin ke clipboard</string>
     <string name="copy_error_empty">Tidak ada teks untuk disalin</string>
-
-    <!-- RSA strings -->
-    <string name="rsa_parameters">Parameter RSA</string>
     <string name="prime_p_hint">Bilangan Prima p</string>
     <string name="prime_q_hint">Bilangan Prima q</string>
+    <string name="rsa_info">Info: n = p × q harus ≥ 256 untuk enkripsi ASCII</string>
     <string name="generate_rsa_keys">Generate Kunci RSA</string>
     <string name="rsa_keys_title">Kunci RSA</string>
     <string name="public_key_format">Kunci Publik (n, e): (%1$d, %2$d)</string>
     <string name="private_key_format">Kunci Privat (n, d): (%1$d, %2$d)</string>
-    <string name="rsa_encrypt">Encrypt RSA</string>
-    <string name="rsa_decrypt">Decrypt RSA</string>
-
-    <!-- RSA Error messages - Updated for ASCII 256 -->
     <string name="error_empty_p">Nilai p tidak boleh kosong!</string>
     <string name="error_empty_q">Nilai q tidak boleh kosong!</string>
     <string name="error_invalid_pq">p dan q harus berupa angka!</string>
@@ -75,8 +67,6 @@
     <string name="error_n_too_small">n = p × q harus >= 256 untuk enkripsi ASCII!</string>
     <string name="error_generate_keys_first">Silakan generate kunci terlebih dahulu!</string>
     <string name="keys_generated_success">Kunci berhasil dibuat!</string>
-
-    <!-- Error messages -->
     <string name="error_empty_input">Input text tidak boleh kosong!</string>
     <string name="error_empty_shift">Nilai pergeseran tidak boleh kosong!</string>
     <string name="error_invalid_shift">Nilai pergeseran harus berupa angka!</string>
@@ -218,7 +208,6 @@
     <string name="auto_solve_enabled_message">Auto solve enabled - Solutions will appear automatically</string>
     <string name="auto_solve_disabled_message">Auto solve disabled - Use Manual Solve button</string>
     <string name="auto_solving_message">Auto solving...</string>
-    <string name="clear">Clear</string>
     <string name="solve">Solve</string>
 
     <!-- Input validation messages -->

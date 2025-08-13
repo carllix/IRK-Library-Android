@@ -27,7 +27,6 @@ class CryptographyRepository {
         val n = request.p * request.q
         val phi = (request.p - 1) * (request.q - 1)
 
-        // Generate keys if not provided
         val publicKey = request.publicKey ?: generatePublicKey(phi, n)
         val privateKey = request.privateKey ?: generatePrivateKey(publicKey.key, phi, n)
 
@@ -71,7 +70,6 @@ class CryptographyRepository {
     }
 
     private fun generatePublicKey(phi: Int, n: Int): RsaKey {
-        // Find e such that gcd(e, phi) = 1 and 1 < e < phi
         var e = 3
         while (e < phi) {
             if (gcd(e, phi) == 1) {
@@ -79,7 +77,7 @@ class CryptographyRepository {
             }
             e += 2
         }
-        return RsaKey(65537, n) // Default RSA exponent
+        return RsaKey(65537, n)
     }
 
     private fun generatePrivateKey(e: Int, phi: Int, n: Int): RsaKey {
@@ -176,10 +174,10 @@ class CryptographyRepository {
         inputs.forEachIndexed { index, input ->
             when (input) {
                 is DecryptInput.Character -> {
-                    steps.append("Input ${index + 1}: '$input.char' = ASCII ${input.value}\n")
+                    steps.append("Input ${index + 1}: ${input.char} = ASCII ${input.value}\n")
                 }
                 is DecryptInput.Number -> {
-                    steps.append("Input ${index + 1}: [$input.value]\n")
+                    steps.append("Input ${index + 1}: [${input.value}]\n")
                 }
             }
         }
@@ -288,7 +286,6 @@ class CryptographyRepository {
                 }
             }
         } else if (inputText.contains(" ")) {
-            // Space-separated numbers
             inputText.split("\\s+".toRegex()).forEach { token ->
                 if (token.isNotEmpty()) {
                     val numberValue = token.toIntOrNull()
@@ -302,7 +299,6 @@ class CryptographyRepository {
                 }
             }
         } else {
-            // Direct character input
             inputText.forEach { char ->
                 inputs.add(DecryptInput.Character(char, char.code))
             }
@@ -447,7 +443,7 @@ class CryptographyRepository {
                         !isPrime(q) -> "q ($q) harus bilangan prima!"
                         p == q -> "p dan q harus berbeda!"
                         p * q < 256 -> "n = p × q harus >= 256 untuk enkripsi ASCII!"
-                        else -> null // No error
+                        else -> null
                     }
                 } catch (e: NumberFormatException) {
                     "p dan q harus berupa angka!"

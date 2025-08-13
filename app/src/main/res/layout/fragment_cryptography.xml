@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Caesar Cipher"
+                android:text="@string/caesar_cipher"
                 android:layout_marginEnd="8dp"
                 style="@style/Widget.Material3.Button.TonalButton" />
 
@@ -42,7 +42,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="RSA"
+                android:text="@string/rsa"
                 android:layout_marginStart="8dp"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Input Text (Semua karakter ASCII - 256 chars)">
+                android:hint="@string/input_text_crypto_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_input_text"
@@ -78,14 +78,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Nilai Pergeseran (Modulo 256)">
+                android:hint="@string/shift_value_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_shift"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:text="3" />
+                    android:text="" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +101,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Encrypt"
+                    android:text="@string/encrypt"
                     android:layout_marginEnd="4dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -109,7 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Decrypt"
+                    android:text="@string/decrypt"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp" />
 
@@ -118,7 +118,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="Clear"
+                    android:text="@string/clear"
                     android:layout_marginStart="4dp"
                     style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:hint="Hasil">
+                    android:hint="@string/result_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_result"
@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="Salin hasil"
+                    android:contentDescription="@string/copy_result"
                     app:icon="@drawable/ic_copy"
                     android:minWidth="48dp"
                     android:visibility="gone"
@@ -167,7 +167,7 @@
                 android:id="@+id/btn_show_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tampilkan Step-by-Step Process"
+                android:text="@string/show_steps"
                 android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 style="@style/Widget.Material3.Button.OutlinedButton" />
@@ -181,7 +181,7 @@
                 android:visibility="gone"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="8dp"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,7 +199,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Step-by-Step Process:"
+                            android:text="@string/step_by_step_title"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -207,7 +207,7 @@
                             android:id="@+id/btn_copy_steps"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:contentDescription="Salin steps"
+                            android:contentDescription="@string/copy_steps"
                             app:icon="@drawable/ic_copy"
                             android:minWidth="40dp"
                             style="@style/Widget.Material3.Button.IconButton" />
@@ -235,15 +235,6 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-            <!-- RSA Parameters -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Parameter RSA"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,14 +246,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:hint="Bilangan Prima p">
+                    android:hint="@string/prime_p_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_p_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:text="17" />
+                        android:text="" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -271,14 +262,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="8dp"
-                    android:hint="Bilangan Prima q">
+                    android:hint="@string/prime_q_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_q_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:text="19" />
+                        android:text="" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -288,7 +279,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Info: n = p × q harus ≥ 256 untuk enkripsi ASCII"
+                android:text="@string/rsa_info"
                 android:textSize="12sp"
                 android:textStyle="italic"
                 android:layout_marginBottom="16dp"
@@ -300,7 +291,7 @@
                 android:id="@+id/btn_generate_keys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Generate Kunci RSA"
+                android:text="@string/generate_rsa_keys"
                 android:layout_marginBottom="16dp" />
 
             <!-- Keys Display -->
@@ -322,7 +313,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Kunci RSA"
+                        android:text="@string/rsa_keys_title"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:layout_marginBottom="8dp" />
@@ -351,7 +342,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:hint="Input Text (Semua karakter ASCII - 256 chars)">
+                android:hint="@string/input_text_crypto_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_rsa_input_text"
@@ -375,7 +366,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Encrypt"
+                    android:text="@string/encrypt"
                     android:layout_marginEnd="4dp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -383,7 +374,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Decrypt"
+                    android:text="@string/decrypt"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="4dp" />
 
@@ -392,7 +383,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
-                    android:text="Clear"
+                    android:text="@string/clear"
                     android:layout_marginStart="4dp"
                     style="@style/Widget.Material3.Button.OutlinedButton" />
 
@@ -410,7 +401,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:hint="Hasil">
+                    android:hint="@string/result_hint">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_rsa_result"
@@ -428,7 +419,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="Salin hasil RSA"
+                    android:contentDescription="@string/copy_result"
                     app:icon="@drawable/ic_copy"
                     android:minWidth="48dp"
                     android:visibility="gone"
@@ -441,7 +432,7 @@
                 android:id="@+id/btn_show_rsa_steps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Tampilkan Step-by-Step Process"
+                android:text="@string/show_steps"
                 android:layout_marginBottom="16dp"
                 android:visibility="gone"
                 style="@style/Widget.Material3.Button.OutlinedButton" />

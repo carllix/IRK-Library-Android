@@ -18,8 +18,8 @@ class CryptographyViewModel : ViewModel() {
 
     init {
         _state.value = CryptographyState(
-            pValue = "17",  // Updated default values for ASCII support
-            qValue = "19"   // 17 * 19 = 323 which is > 256
+            pValue = "17",
+            qValue = "19"
         )
     }
 
@@ -107,7 +107,7 @@ class CryptographyViewModel : ViewModel() {
             val q = currentState.qValue.toInt()
 
             val request = RsaRequest(
-                text = "A", // Dummy text for key generation
+                text = "A",
                 p = p,
                 q = q,
                 isEncrypt = true
@@ -202,10 +202,8 @@ class CryptographyViewModel : ViewModel() {
     private fun performCaesarCipher(isEncrypt: Boolean) {
         val currentState = _state.value ?: return
 
-        // Show loading
         _state.value = currentState.copy(isLoading = true, errorMessage = "")
 
-        // Validate input
         val errorMessage = repository.validateInput(
             currentState.inputText,
             currentState.shiftValue
@@ -287,8 +285,8 @@ class CryptographyViewModel : ViewModel() {
         val currentState = _state.value ?: return
         _state.value = currentState.copy(
             inputText = "",
-            pValue = "17",  // Updated default values
-            qValue = "19",  // Updated default values
+            pValue = "17",
+            qValue = "19",
             result = "",
             steps = "",
             isStepsVisible = false,
