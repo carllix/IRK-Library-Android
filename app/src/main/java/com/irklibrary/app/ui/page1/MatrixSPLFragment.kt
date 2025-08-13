@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
 import com.irklibrary.app.R
@@ -64,10 +65,8 @@ class MatrixSPLFragment : Fragment() {
 
     // Common UI Elements
     private lateinit var btnClear: MaterialButton
-    private lateinit var btnSolve: MaterialButton
+    private lateinit var btnManualSolve: MaterialButton
     private lateinit var progressLoading: LinearProgressIndicator
-    private lateinit var cardError: MaterialCardView
-    private lateinit var textError: TextView
     private lateinit var layoutResult: LinearLayout
     private lateinit var textResult: TextView
     private lateinit var scrollResultMatrix: HorizontalScrollView
@@ -75,6 +74,11 @@ class MatrixSPLFragment : Fragment() {
     private lateinit var btnShowSteps: MaterialButton
     private lateinit var cardSteps: MaterialCardView
     private lateinit var recyclerSteps: RecyclerView
+
+    // Auto solve toggle elements
+    private lateinit var switchAutoSolve: MaterialSwitch
+    private lateinit var textAutoSolveDescription: TextView
+    private lateinit var progressAutoSolve: LinearProgressIndicator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -134,10 +138,8 @@ class MatrixSPLFragment : Fragment() {
 
         // Common UI
         btnClear = view.findViewById(R.id.btnClear)
-        btnSolve = view.findViewById(R.id.btnSolve)
+        btnManualSolve = view.findViewById(R.id.btnManualSolve)
         progressLoading = view.findViewById(R.id.progressLoading)
-        cardError = view.findViewById(R.id.cardError)
-        textError = view.findViewById(R.id.textError)
         layoutResult = view.findViewById(R.id.layoutResult)
         textResult = view.findViewById(R.id.textResult)
         scrollResultMatrix = view.findViewById(R.id.scrollResultMatrix)
@@ -145,6 +147,11 @@ class MatrixSPLFragment : Fragment() {
         btnShowSteps = view.findViewById(R.id.btnShowSteps)
         cardSteps = view.findViewById(R.id.cardSteps)
         recyclerSteps = view.findViewById(R.id.recyclerSteps)
+
+        // Auto solve toggle elements
+        switchAutoSolve = view.findViewById(R.id.switchAutoSolve)
+        textAutoSolveDescription = view.findViewById(R.id.textAutoSolveDescription)
+        progressAutoSolve = view.findViewById(R.id.progressAutoSolve)
     }
 
     private fun initViewModel() {
@@ -158,7 +165,25 @@ class MatrixSPLFragment : Fragment() {
         setupMultiplicationMethodsUI()
         setupExponentiationUI()
         setupCommonUI()
+        setupAutoSolveToggle()
         setupRecyclerView()
+    }
+
+    private fun setupAutoSolveToggle() {
+        // Setup toggle switch
+        switchAutoSolve.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setAutoSolveEnabled(isChecked)
+        }
+
+        // Add smooth animation for better UX
+        switchAutoSolve.setOnClickListener {
+            // Add haptic feedback if available
+            try {
+                it.performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
+            } catch (e: Exception) {
+                // Ignore if haptic feedback not available
+            }
+        }
     }
 
     private fun setupModeButtons() {
@@ -179,7 +204,6 @@ class MatrixSPLFragment : Fragment() {
             viewModel.setSPLMethod(SPLMethod.CRAMER)
         }
 
-        // Size input with number restriction
         editSPLSize.inputType = android.text.InputType.TYPE_CLASS_NUMBER
         editSPLSize.filters = arrayOf(createSizeInputFilter())
         editSPLSize.addTextChangedListener(createIntTextWatcher { size ->
@@ -254,7 +278,6 @@ class MatrixSPLFragment : Fragment() {
     }
 
     private fun setupExponentiationUI() {
-        // Exponent input with number restriction
         editExponent.inputType = android.text.InputType.TYPE_CLASS_NUMBER
         editExponent.filters = arrayOf(createExponentInputFilter())
         editExponent.addTextChangedListener(createIntTextWatcher { exponent ->
@@ -265,10 +288,10 @@ class MatrixSPLFragment : Fragment() {
     }
 
     private fun setupCommonUI() {
-        btnSolve.setOnClickListener {
+        btnManualSolve.setOnClickListener {
             when (viewModel.currentMode.value) {
-                OperationMode.SPL -> viewModel.solveSPL()
-                OperationMode.MATRIX_OPERATIONS -> viewModel.performMatrixOperation()
+                OperationMode.SPL -> viewModel.manualSolveSPL()
+                OperationMode.MATRIX_OPERATIONS -> viewModel.manualPerformMatrixOperation()
                 else -> {}
             }
         }
@@ -291,6 +314,14 @@ class MatrixSPLFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.currentMode.observe(viewLifecycleOwner) { mode ->
             updateModeUI(mode)
+        }
+
+        viewModel.autoSolveEnabled.observe(viewLifecycleOwner) { enabled ->
+            updateAutoSolveUI(enabled)
+        }
+
+        viewModel.isAutoSolving.observe(viewLifecycleOwner) { isAutoSolving ->
+            updateAutoSolvingStatus(isAutoSolving)
         }
 
         viewModel.splMethod.observe(viewLifecycleOwner) { method ->
@@ -359,21 +390,42 @@ class MatrixSPLFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
-            btnSolve.isEnabled = !isLoading
-        }
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
-            if (error != null) {
-                textError.text = error
-                cardError.visibility = View.VISIBLE
-            } else {
-                cardError.visibility = View.GONE
-            }
+            btnManualSolve.isEnabled = !isLoading
         }
 
         viewModel.showSteps.observe(viewLifecycleOwner) { showSteps ->
             cardSteps.visibility = if (showSteps) View.VISIBLE else View.GONE
             btnShowSteps.text = if (showSteps) getString(R.string.hide_steps) else getString(R.string.show_steps)
+        }
+    }
+
+    private fun updateAutoSolveUI(enabled: Boolean) {
+        // Update switch state (without triggering listener)
+        switchAutoSolve.setOnCheckedChangeListener(null)
+        switchAutoSolve.isChecked = enabled
+        switchAutoSolve.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setAutoSolveEnabled(isChecked)
+        }
+
+        // Update status text and styling
+        if (enabled) {
+            textAutoSolveDescription.text = "Auto Solve: On"
+            textAutoSolveDescription.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
+
+            btnManualSolve.visibility = View.GONE
+        } else {
+            textAutoSolveDescription.text = "Auto Solve: Off"
+            textAutoSolveDescription.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
+
+            btnManualSolve.visibility = View.VISIBLE
+        }
+    }
+
+    private fun updateAutoSolvingStatus(isAutoSolving: Boolean) {
+        if (isAutoSolving) {
+            progressAutoSolve.visibility = View.VISIBLE
+        } else {
+            progressAutoSolve.visibility = View.GONE
         }
     }
 
@@ -794,7 +846,6 @@ class MatrixSPLFragment : Fragment() {
     }
 
     private fun hideError() {
-        cardError.visibility = View.GONE
         viewModel.clearError()
     }
 }

@@ -5,10 +5,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.irklibrary.app.data.models.*
 import com.irklibrary.app.data.repositories.MatrixSPLRepository
+import android.os.Handler
+import android.os.Looper
 
 class MatrixSPLViewModel : ViewModel() {
 
     private val repository = MatrixSPLRepository()
+
+    // Auto solve related
+    private val autoSolveHandler = Handler(Looper.getMainLooper())
+    private var autoSolveRunnable: Runnable? = null
+    private val AUTO_SOLVE_DELAY = 1500L
+
+    private val _autoSolveEnabled = MutableLiveData<Boolean>(true)
+    val autoSolveEnabled: LiveData<Boolean> = _autoSolveEnabled
+
+    private val _isAutoSolving = MutableLiveData<Boolean>(false)
+    val isAutoSolving: LiveData<Boolean> = _isAutoSolving
 
     // Current mode (SPL or Matrix Operations)
     private val _currentMode = MutableLiveData<OperationMode>(OperationMode.SPL)
@@ -85,14 +98,142 @@ class MatrixSPLViewModel : ViewModel() {
         initializeMatrices()
     }
 
+    // Auto solve methods
+    fun setAutoSolveEnabled(enabled: Boolean) {
+        _autoSolveEnabled.value = enabled
+
+        if (enabled) {
+            // If enabling auto solve, trigger it immediately if input is complete
+            scheduleAutoSolve()
+        } else {
+            // If disabling auto solve, cancel any pending auto solve
+            cancelAutoSolve()
+        }
+    }
+
+    fun toggleAutoSolve() {
+        val currentValue = _autoSolveEnabled.value ?: true
+        setAutoSolveEnabled(!currentValue)
+    }
+
+    private fun scheduleAutoSolve() {
+        if (_autoSolveEnabled.value != true) return
+
+        // Cancel any existing auto solve
+        cancelAutoSolve()
+
+        // Schedule new auto solve
+        autoSolveRunnable = Runnable {
+            if (_autoSolveEnabled.value == true && !(_isLoading.value ?: false)) {
+                performAutoSolve()
+            }
+        }
+        autoSolveHandler.postDelayed(autoSolveRunnable!!, AUTO_SOLVE_DELAY)
+    }
+
+    private fun cancelAutoSolve() {
+        autoSolveRunnable?.let { runnable ->
+            autoSolveHandler.removeCallbacks(runnable)
+            autoSolveRunnable = null
+        }
+    }
+
+    private fun performAutoSolve() {
+        when (_currentMode.value) {
+            OperationMode.SPL -> {
+                if (isSPLInputComplete()) {
+                    _isAutoSolving.value = true
+                    solveSPL()
+                    _isAutoSolving.value = false
+                }
+            }
+            OperationMode.MATRIX_OPERATIONS -> {
+                if (isMatrixInputComplete()) {
+                    _isAutoSolving.value = true
+                    performMatrixOperation()
+                    _isAutoSolving.value = false
+                }
+            }
+            else -> {}
+        }
+    }
+
+    private fun isSPLInputComplete(): Boolean {
+        val matrix = _splMatrix.value ?: return false
+        val constants = _splConstants.value ?: return false
+        val size = _splSize.value ?: return false
+
+        // Check if all matrix elements are non-zero (or at least meaningful)
+        var hasNonZeroElements = false
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                if (kotlin.math.abs(matrix.get(i, j)) > 1e-10) {
+                    hasNonZeroElements = true
+                    break
+                }
+            }
+            if (hasNonZeroElements) break
+        }
+
+        // Check if at least one constant is non-zero
+        var hasNonZeroConstants = false
+        for (i in 0 until size) {
+            if (kotlin.math.abs(constants[i]) > 1e-10) {
+                hasNonZeroConstants = true
+                break
+            }
+        }
+
+        return hasNonZeroElements || hasNonZeroConstants
+    }
+
+    private fun isMatrixInputComplete(): Boolean {
+        val matrixA = _matrixA.value ?: return false
+        val operation = _matrixOperation.value ?: return false
+
+        // Check if matrix A has meaningful values
+        var hasNonZeroA = false
+        for (i in 0 until matrixA.rows) {
+            for (j in 0 until matrixA.cols) {
+                if (kotlin.math.abs(matrixA.get(i, j)) > 1e-10) {
+                    hasNonZeroA = true
+                    break
+                }
+            }
+            if (hasNonZeroA) break
+        }
+
+        if (!hasNonZeroA) return false
+
+        // Check matrix B if needed
+        if (_needsTwoMatrices.value == true) {
+            val matrixB = _matrixB.value ?: return false
+            var hasNonZeroB = false
+            for (i in 0 until matrixB.rows) {
+                for (j in 0 until matrixB.cols) {
+                    if (kotlin.math.abs(matrixB.get(i, j)) > 1e-10) {
+                        hasNonZeroB = true
+                        break
+                    }
+                }
+                if (hasNonZeroB) break
+            }
+            return hasNonZeroB
+        }
+
+        return true
+    }
+
     fun setOperationMode(mode: OperationMode) {
         _currentMode.value = mode
         clearResults()
+        scheduleAutoSolve()
     }
 
     fun setSPLMethod(method: SPLMethod) {
         _splMethod.value = method
         clearSPLResult()
+        scheduleAutoSolve()
     }
 
     fun setSPLSize(size: Int) {
@@ -106,6 +247,8 @@ class MatrixSPLViewModel : ViewModel() {
             } else {
                 _errorMessage.value = null
             }
+
+            scheduleAutoSolve()
         } else {
             _errorMessage.value = "Ukuran SPL tidak valid (harus 2-20)"
         }
@@ -122,6 +265,7 @@ class MatrixSPLViewModel : ViewModel() {
         matrix.set(row, col, value)
         _splMatrix.value = matrix
         clearSPLResult()
+        scheduleAutoSolve()
     }
 
     fun updateSPLConstant(index: Int, value: Double) {
@@ -129,6 +273,7 @@ class MatrixSPLViewModel : ViewModel() {
         constants[index] = value
         _splConstants.value = constants
         clearSPLResult()
+        scheduleAutoSolve()
     }
 
     fun solveSPL() {
@@ -182,17 +327,21 @@ class MatrixSPLViewModel : ViewModel() {
             _matrixBRows.value = aCols
             initializeMatrices()
         }
+
+        scheduleAutoSolve()
     }
 
     fun setMultiplicationMethod(method: MultiplicationMethod) {
         _multiplicationMethod.value = method
         clearMatrixResult()
+        scheduleAutoSolve()
     }
 
     fun setMatrixExponent(exponent: Int) {
         if (exponent >= 0) {
             _matrixExponent.value = exponent
             clearMatrixResult()
+            scheduleAutoSolve()
         } else {
             _errorMessage.value = "Eksponen harus bilangan bulat non-negatif"
         }
@@ -209,6 +358,7 @@ class MatrixSPLViewModel : ViewModel() {
 
             initializeMatrices()
             clearMatrixResult()
+            scheduleAutoSolve()
         } else {
             _errorMessage.value = "Ukuran matrix tidak valid (harus 1-10)"
         }
@@ -220,6 +370,7 @@ class MatrixSPLViewModel : ViewModel() {
             _matrixBCols.value = cols
             initializeMatrices()
             clearMatrixResult()
+            scheduleAutoSolve()
         } else {
             _errorMessage.value = "Ukuran matrix tidak valid (harus 1-10)"
         }
@@ -240,6 +391,7 @@ class MatrixSPLViewModel : ViewModel() {
         matrix.set(row, col, value)
         _matrixA.value = matrix
         clearMatrixResult()
+        scheduleAutoSolve()
     }
 
     fun updateMatrixBElement(row: Int, col: Int, value: Double) {
@@ -247,6 +399,7 @@ class MatrixSPLViewModel : ViewModel() {
         matrix.set(row, col, value)
         _matrixB.value = matrix
         clearMatrixResult()
+        scheduleAutoSolve()
     }
 
     fun performMatrixOperation() {
@@ -304,6 +457,8 @@ class MatrixSPLViewModel : ViewModel() {
     }
 
     fun clearAll() {
+        cancelAutoSolve() // Cancel any pending auto solve
+
         when (_currentMode.value) {
             OperationMode.SPL -> {
                 _splSize.value = 3
@@ -323,6 +478,8 @@ class MatrixSPLViewModel : ViewModel() {
             else -> {
             }
         }
+
+        scheduleAutoSolve()
     }
 
     private fun clearSPLResult() {
@@ -339,6 +496,21 @@ class MatrixSPLViewModel : ViewModel() {
 
     fun clearError() {
         _errorMessage.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancelAutoSolve()
+    }
+
+    fun manualSolveSPL() {
+        cancelAutoSolve()
+        solveSPL()
+    }
+
+    fun manualPerformMatrixOperation() {
+        cancelAutoSolve()
+        performMatrixOperation()
     }
 }
 

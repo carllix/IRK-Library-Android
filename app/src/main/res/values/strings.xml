@@ -5,6 +5,7 @@
     <string name="spl_matrix">SPL &amp; Matrix</string>
     <string name="cryptography">Cryptography</string>
     <string name="huffman"> Huffman Coding</string>
+    <string name="nav_other_section">Lainnya</string>
 
     <!-- About -->
     <string name="about">About</string>
@@ -24,7 +25,6 @@
     <string name="result_hint">Hasil</string>
     <string name="encrypt">Encrypt</string>
     <string name="decrypt">Decrypt</string>
-    <string name="clear">Clear</string>
     <string name="show_steps">Tampilkan Step-by-Step Process</string>
     <string name="hide_steps">Sembunyikan Step-by-Step Process</string>
     <string name="copy_result">Salin Hasil</string>
@@ -117,9 +117,141 @@
     <string name="huffman_error_whitespace_only">Input tidak boleh hanya spasi</string>
     <string name="huffman_error_processing">Terjadi kesalahan saat memproses</string>
 
-    <!-- Huffman Steps -->
-    <string name="huffman_step_selected_nodes">Nodes dipilih:</string>
-    <string name="huffman_step_new_node">Node baru:</string>
-    <string name="huffman_step_current_order">Urutan saat ini:</string>
+    <!-- About Page strings -->
+    <string name="about_title">Tentang Saya</string>
+    <string name="about_name">Carlo Angkisan</string>
+    <string name="about_nim">NIM: 13523091</string>
+    <string name="about_description">Mahasiswa Teknik Informatika ITB yang passionate dalam pengembangan software, teknologi, dan inovasi. Tertarik dengan Android Development, Machine Learning, dan Web Development.</string>
+
+    <!-- About - Motivation -->
+    <string name="about_motivation_title">Motivasi Pembuatan Aplikasi</string>
+    <string name="about_motivation_content">Aplikasi ini dibuat untuk memenuhi Tugas Seleksi IRK yang diberikan oleh Kak Eka. Selain itu, saya tertarik karena poin yang didapatkan cukup besar dan juga ingin belajar Android Development karena project-project sebelumnya hanya web development dan tidak jauh-jauh dari ekosistem React. Melalui aplikasi ini, saya ingin menunjukkan kemampuan dalam mengimplementasikan algoritma kompleks seperti Huffman Coding dan Cryptography dalam platform mobile.</string>
+
+    <!-- About - Vision & Mission -->
+    <string name="about_vision_title">Visi Menjadi Asisten Lab IRK</string>
+    <string name="about_vision_content">Menjadi asisten laboratorium yang dapat membantu mahasiswa memahami konsep-konsep kompleks dalam bidang computational science dan algorithms dengan cara yang mudah dipahami dan aplikatif.</string>
+
+    <string name="about_mission_title">Misi Menjadi Asisten Lab IRK</string>
+    <string name="about_mission_content">1. Membantu mahasiswa dalam memahami algoritma dan struktur data melalui implementasi praktis\n2. Mengembangkan tools dan aplikasi edukatif yang mendukung pembelajaran\n3. Memberikan mentoring berkualitas dalam bidang programming dan problem solving\n4. Berkontribusi dalam research dan development di laboratorium IRK</string>
+
+    <!-- About - Contact -->
+    <string name="about_contact_title">Hubungi Saya</string>
+    <string name="about_email">carloangkisan21@gmail.com</string>
+    <string name="about_line_id">carlo.angkisan</string>
+    <string name="about_instagram_username">`@carloangkisann</string>
+
+    <!-- About - URLs -->
+    <string name="about_github_url">https://github.com/carllix</string>
+    <string name="about_linkedin_url">https://linkedin.com/in/carlo-angkisan</string>
+
+    <!-- About - Content Descriptions -->
+    <string name="about_profile_photo_desc">Foto profil Carlo Angkisan</string>
+    <string name="about_github_desc">GitHub profile</string>
+    <string name="about_linkedin_desc">LinkedIn profile</string>
+    <string name="about_motivation_icon">Ikon motivasi</string>
+    <string name="about_vision_icon">Ikon visi</string>
+    <string name="about_mission_icon">Ikon misi</string>
+    <string name="about_contact_icon">Ikon kontak</string>
+    <string name="about_email_icon">Ikon email</string>
+    <string name="about_line_icon">Ikon Line</string>
+    <string name="about_instagram_icon">Ikon Instagram</string>
+
+    <!-- About - Footer -->
+    <string name="about_footer">Made with ❤️ for IRK Laboratory Selection\n© 2024 Carlo Angkisan</string>
+
+    <!-- SPL & Matrix Page strings -->
+    <string name="spl_matrix_title">SPL &amp; Matrix Operations</string>
+    <string name="spl_mode">SPL</string>
+    <string name="matrix_operations_mode">Matrix Operations</string>
+
+    <!-- SPL strings -->
+    <string name="spl_method_label">Pilih Metode:</string>
+    <string name="gauss_jordan">Gauss-Jordan</string>
+    <string name="cramer_rule">Kaidah Cramer</string>
+    <string name="matrix_size_label">Ukuran Matrix:</string>
+    <string name="matrix_size_hint">Ukuran (contoh: 3)</string>
+    <string name="matrix_rows_hint">Baris</string>
+    <string name="matrix_cols_hint">Kolom</string>
+    <string name="coefficient_matrix_label">Input Matrix Koefisien:</string>
+    <string name="constants_label">Konstanta:</string>
+
+    <!-- Matrix Operations strings -->
+    <string name="operation_label">Pilih Operasi:</string>
+    <string name="matrix_addition">Penjumlahan</string>
+    <string name="matrix_subtraction">Pengurangan</string>
+    <string name="matrix_multiplication">Perkalian</string>
+    <string name="matrix_inverse">Inverse</string>
+    <string name="matrix_determinant">Determinan</string>
+    <string name="matrix_a_label">Matrix A:</string>
+    <string name="matrix_b_label">Matrix B:</string>
+
+    <!-- Common strings -->
+    <string name="solve_button">SOLVE</string>
+    <string name="result_label">Hasil:</string>
+    <string name="steps_label">Langkah-langkah Penyelesaian:</string>
+
+    <!-- Size options -->
+    <string name="size_2x2">2 x 2</string>
+    <string name="size_3x3">3 x 3</string>
+    <string name="size_4x4">4 x 4</string>
+    <string name="size_5x5">5 x 5</string>
+    <string name="size_2x3">2 x 3</string>
+    <string name="size_3x2">3 x 2</string>
+    <string name="size_3x4">3 x 4</string>
+    <string name="size_4x3">4 x 3</string>
+
+    <!-- Size limits and validation -->
+    <string name="size_range_info">Ukuran matrix: 1-20</string>
+    <string name="spl_size_range_info">Ukuran SPL: 2-20</string>
+
+    <!-- Error messages -->
+    <string name="error_incomplete_data">Data tidak lengkap</string>
+    <string name="error_invalid_matrix_size">Ukuran matrix tidak valid (harus 1-20)</string>
+    <string name="error_invalid_spl_size">Ukuran SPL tidak valid (harus 2-20)</string>
+    <string name="error_singular_matrix">Matrix singular (tidak memiliki inverse)</string>
+    <string name="error_dimension_mismatch">Dimensi matrix tidak sesuai untuk operasi ini</string>
+    <string name="error_cramer_non_square">Matrix harus persegi untuk menggunakan Kaidah Cramer</string>
+    <string name="error_cramer_zero_determinant">det(A) = 0, sistem tidak dapat diselesaikan dengan Kaidah Cramer</string>
+    <string name="error_large_matrix_performance">Matrix besar (>10x10) mungkin memerlukan waktu komputasi lebih lama</string>
+
+    <!-- Solution messages -->
+    <string name="solution_unique">Solusi unik ditemukan</string>
+    <string name="solution_infinite">Sistem memiliki solusi tak hingga</string>
+    <string name="solution_no_solution">Sistem tidak konsisten (tidak ada solusi)</string>
+
+    <!-- Step descriptions -->
+    <string name="step_initial_matrix">Matriks augmented awal:</string>
+    <string name="step_swap_rows">Tukar baris R%1$d dengan R%2$d:</string>
+    <string name="step_divide_row">Bagi baris R%1$d dengan %2$s:</string>
+    <string name="step_eliminate_column">Eliminasi kolom %1$d:</string>
+    <string name="step_calculate_determinant">Hitung determinan matrix A:</string>
+    <string name="step_create_ai_matrix">Hitung determinan A%1$d (ganti kolom %1$d dengan konstanta):</string>
+    <string name="step_calculate_variable">Hitung nilai x%1$d:</string>
+    <string name="step_determinant_product">Determinan = produk elemen diagonal:</string>
+
+    <!-- Input hints and validation -->
+    <string name="matrix_element_hint">0</string>
+    <string name="number_input_hint">Contoh: 5, -3, 2.5</string>
+    <string name="number_input_help">Gunakan tanda - untuk angka negatif</string>
+    <string name="size_input_hint">1-20</string>
+    <string name="positive_integer_hint">Angka positif</string>
+
+    <!-- Auto Solve specific strings -->
+    <string name="auto_solve_on">Auto Solve: ON</string>
+    <string name="auto_solve_off">Auto Solve: OFF</string>
+    <string name="manual_solve">Manual Solve</string>
+    <string name="auto_solve_enabled_message">Auto solve enabled - Solutions will appear automatically</string>
+    <string name="auto_solve_disabled_message">Auto solve disabled - Use Manual Solve button</string>
+    <string name="auto_solving_message">Auto solving...</string>
+    <string name="clear">Clear</string>
+    <string name="solve">Solve</string>
+
+    <!-- Input validation messages -->
+    <string name="error_invalid_number_format">Format angka tidak valid</string>
+    <string name="error_number_too_large">Angka terlalu besar (maksimal 1,000,000)</string>
+    <string name="error_size_out_of_range">Ukuran harus antara 1-20</string>
+    <string name="error_spl_size_out_of_range">Ukuran SPL harus antara 2-20</string>
+    <string name="input_numbers_only">Hanya angka yang diizinkan</string>
+    <string name="input_negative_help">Tip: Untuk angka negatif, ketik tanda - di awal</string>
 
 </resources>
