@@ -24,6 +24,15 @@
     <string name="about_linkedin">carloangkisan</string>
     <string name="about_icon">Ikon</string>
 
+    <!-- References -->
+    <string name="references">References</string>
+    <string name="search_placeholder">Cari slide berdasarkan judul...</string>
+    <string name="search_clear">Clear search</string>
+    <string name="matkul_filter">Matkul: </string>
+    <string name="search_icon">Search</string>
+    <string name="search_not_found">Tidak ada slide ditemukan</string>
+    <string name="see_slide">Lihat</string>
+
     <!-- Cryptography strings -->
     <string name="cryptography_title">Cryptography</string>
     <string name="caesar_cipher">Caesar Cipher</string>
@@ -220,8 +229,6 @@
     <string name="input_numbers_only">Hanya angka yang diizinkan</string>
     <string name="input_negative_help">Tip: Untuk angka negatif, ketik tanda - di awal</string>
 
-    <!-- References -->
-    <string name="references">References</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

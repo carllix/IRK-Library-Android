@@ -155,7 +155,6 @@ class ReferencesFragment : Fragment() {
     private fun updateResultCount(count: Int) {
         resultCountText.text = when {
             count == 0 -> ""
-            count == 1 -> "1 slide ditemukan"
             else -> "$count slide ditemukan"
         }
         resultCountText.visibility = if (count > 0) View.VISIBLE else View.GONE
@@ -168,9 +167,5 @@ class ReferencesFragment : Fragment() {
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    companion object {
-        fun newInstance() = ReferencesFragment()
     }
 }

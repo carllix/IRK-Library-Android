@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header with Mata Kuliah Code -->
+        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
                 android:id="@+id/tv_matkul_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="IF1220"
+                android:text=""
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary"
@@ -45,7 +45,7 @@
                 android:id="@+id/tv_matkul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Matematika Diskrit"
+                android:text=""
                 android:textSize="12sp"
                 android:textColor="@color/on_surface_variant"
                 android:maxLines="1"
@@ -58,7 +58,7 @@
             android:id="@+id/tv_slide_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pengantar Matematika Diskrit"
+            android:text=""
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/on_surface"
@@ -78,7 +78,7 @@
                 android:id="@+id/btn_see_slide"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="Lihat"
+                android:text="@string/see_slide"
                 android:textSize="12sp"
                 android:backgroundTint="@color/primary"
                 android:textColor="@color/on_primary"

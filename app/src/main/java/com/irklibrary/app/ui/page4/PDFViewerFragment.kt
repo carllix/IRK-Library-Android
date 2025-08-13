@@ -94,7 +94,6 @@ class PDFViewerFragment : Fragment() {
                 ) {
                     super.onReceivedError(view, request, error)
                     progressBar.visibility = View.GONE
-                    // Handle error - bisa tambahkan error state di sini
                 }
             }
         }

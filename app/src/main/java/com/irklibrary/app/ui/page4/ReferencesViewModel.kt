@@ -11,7 +11,6 @@ class ReferencesViewModel : ViewModel() {
     private val repository = SlidesRepository()
 
     private val _slides = MutableLiveData<List<SlideWithMatkulModel>>()
-    val slides: LiveData<List<SlideWithMatkulModel>> = _slides
 
     private val _filteredSlides = MutableLiveData<List<SlideWithMatkulModel>>()
     val filteredSlides: LiveData<List<SlideWithMatkulModel>> = _filteredSlides
@@ -86,7 +85,4 @@ class ReferencesViewModel : ViewModel() {
         updateSearchQuery("")
     }
 
-    fun getSlideCount(): Int {
-        return _filteredSlides.value?.size ?: 0
-    }
 }
