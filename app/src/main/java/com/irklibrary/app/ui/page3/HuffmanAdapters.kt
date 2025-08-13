@@ -44,7 +44,6 @@ class HuffmanNodeAdapter(
         fun bind(node: HuffmanNode, highlightStyle: NodeHighlightStyle) {
             tvNodeCharacter.text = when {
                 node.character != null -> {
-                    // Use nodeId for display (which handles space as underscore)
                     node.nodeId
                 }
                 else -> {

@@ -30,16 +30,16 @@
     <color name="outline_variant">#CAC4D0</color>
 
     <!-- Switch specific colors -->
-    <color name="switch_track_enabled">#6200EE</color>  <!-- Same as primary -->
-    <color name="switch_track_disabled">#E0E0E0</color> <!-- Light gray -->
-    <color name="switch_thumb">#FFFFFF</color>          <!-- Always white -->
+    <color name="switch_track_enabled">#6750A4</color>
+    <color name="switch_track_disabled">#E0E0E0</color>
+    <color name="switch_thumb">#FFFFFF</color>
 
     <!-- Auto solve status colors -->
-    <color name="auto_solve_enabled_bg">#E8F5E8</color>       <!-- Light green -->
-    <color name="auto_solve_enabled_border">#4CAF50</color>   <!-- Green -->
-    <color name="auto_solve_enabled_text">#2E7D32</color>     <!-- Dark green -->
+    <color name="auto_solve_enabled_bg">#E8F5E8</color>
+    <color name="auto_solve_enabled_border">#4CAF50</color>
+    <color name="auto_solve_enabled_text">#2E7D32</color>
 
-    <color name="auto_solve_disabled_bg">#F0F0F0</color>      <!-- Light gray -->
-    <color name="auto_solve_disabled_border">#BDBDBD</color>  <!-- Medium gray -->
-    <color name="auto_solve_disabled_text">#757575</color>    <!-- Dark gray -->
+    <color name="auto_solve_disabled_bg">#F0F0F0</color>
+    <color name="auto_solve_disabled_border">#BDBDBD</color>
+    <color name="auto_solve_disabled_text">#757575</color>
 </resources>

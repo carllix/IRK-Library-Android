@@ -89,6 +89,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 tools:listitem="@layout/item_huffman_node" />
 
         </LinearLayout>

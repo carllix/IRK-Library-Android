@@ -202,7 +202,7 @@ class HuffmanFragment : Fragment() {
         viewModel.isProcessing.observe(viewLifecycleOwner) { isProcessing ->
             progressBar.visibility = if (isProcessing) View.VISIBLE else View.GONE
             btnProcess.isEnabled = !isProcessing
-            btnProcess.text = if (isProcessing) "Processing..." else "Process"
+            btnProcess.text = if (isProcessing) "Processing" else "Process"
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->

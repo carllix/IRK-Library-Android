@@ -2,7 +2,6 @@
     <string name="app_name">IRK Library</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="spl_matrix">SPL &amp; Matrix</string>
     <string name="huffman"> Huffman Coding</string>
     <string name="clear">Clear</string>
 
@@ -32,6 +31,12 @@
     <string name="search_icon">Search</string>
     <string name="search_not_found">Tidak ada slide ditemukan</string>
     <string name="see_slide">Lihat</string>
+
+    <!-- SPL & Matrix -->
+    <string name="spl_matrix">SPL &amp; Matrix</string>
+    <string name="spl">SPL</string>
+    <string name="matrix_operations">Matrix</string>
+    <string name="auto_solve_title">Auto Solve</string>
 
     <!-- Cryptography -->
     <string name="cryptography">Cryptography</string>
@@ -73,42 +78,31 @@
     <string name="no_characters_to_process">Tidak ada karakter untuk diproses.</string>
     <string name="ascii_note">Catatan: Semua karakter ASCII (0-255) diproses dengan modulo 256.</string>
 
-    <!-- Huffman Coding strings -->
-    <string name="huffman_title">Huffman Coding</string>
+    <!-- Huffman -->
     <string name="huffman_input_hint">Masukkan teks untuk dikode</string>
     <string name="huffman_process">Process</string>
     <string name="huffman_clear">Clear</string>
-    <string name="huffman_processing">Processing...</string>
+    <string name="huffman_processing">Processing</string>
     <string name="huffman_input_title">Input Teks</string>
     <string name="huffman_tree_view_reset">Reset View</string>
     <string name="huffman_tree_animation_info">Info: Pinch to zoom, drag to pan, click node to highlight path</string>
-
-    <!-- Huffman Results -->
     <string name="huffman_compression_info">Informasi Kompresi</string>
     <string name="huffman_tree_animation">Visualisasi Konstruksi Tree</string>
     <string name="huffman_construction_steps">Step-by-Step Process</string>
     <string name="huffman_encoding_results">Encoding &amp; Code Table</string>
     <string name="huffman_decoding_process">Decoding Process</string>
     <string name="huffman_compression_ratio">Rasio Kompresi</string>
-
-    <!-- Huffman Buttons -->
     <string name="huffman_animate_tree">Animate Tree Construction</string>
     <string name="huffman_copy_encoded">Copy</string>
     <string name="huffman_copy_success">Encoded text copied to clipboard</string>
-
-    <!-- Huffman Table Headers -->
     <string name="huffman_character_header">Simbol</string>
     <string name="huffman_frequency_header">Frekuensi</string>
     <string name="huffman_code_header">Kode</string>
     <string name="huffman_encoded_text_label">Encoded Text:</string>
     <string name="huffman_code_table_label">Code Table:</string>
     <string name="huffman_encoding_instruction">Kodekan setiap huruf sesuai dengan tabel kode diatas:</string>
-
-    <!-- Huffman Decoding strings -->
     <string name="huffman_decoding_instruction">Proses decoding dari encoded text kembali ke teks asli:</string>
     <string name="huffman_decoding_info">Info: Setiap bit akan dibaca secara berurutan hingga ditemukan kode yang cocok</string>
-
-    <!-- Huffman Compression Ratio strings -->
     <string name="huffman_compression_formula">Rasio Kompresi = (Ukuran Data Setelah Kompresi / Ukuran Data Sebelum Kompresi) × 100%</string>
     <string name="huffman_compression_note">Info: 1 karakter setara 8 bit</string>
     <string name="huffman_original_size">Ukuran Asli:</string>
@@ -116,18 +110,12 @@
     <string name="huffman_compression_percentage">Rasio Kompresi:</string>
     <string name="huffman_bits_format">%1$d bit</string>
     <string name="huffman_percentage_format">%.2f%%</string>
-
-    <!-- Huffman Error Messages -->
     <string name="huffman_error_empty_input">Input tidak boleh kosong</string>
     <string name="huffman_error_min_length">Input minimal 2 karakter</string>
     <string name="huffman_error_max_length">Input maksimal 1000 karakter</string>
     <string name="huffman_error_whitespace_only">Input tidak boleh hanya spasi</string>
     <string name="huffman_error_processing">Terjadi kesalahan saat memproses</string>
 
-    <!-- SPL & Matrix Page strings -->
-    <string name="spl_matrix_title">SPL &amp; Matrix Operations</string>
-    <string name="spl_mode">SPL</string>
-    <string name="matrix_operations_mode">Matrix Operations</string>
 
     <!-- SPL strings -->
     <string name="spl_method_label">Pilih Metode:</string>
