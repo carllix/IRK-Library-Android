@@ -43,10 +43,10 @@ class DecodingStepsAdapter(
             tvCurrentBits.text = step.currentBits
             tvMatchedCode.text = step.matchedCode
 
-            val displayChar = if (step.decodedCharacter == ' ') "'_' (spasi)" else "'${step.decodedCharacter}'"
+            val displayChar = if (step.decodedCharacter == ' ') "'_'" else "'${step.decodedCharacter}'"
             tvDecodedChar.text = displayChar
 
-            tvRemainingBits.text = if (step.remainingBits.isEmpty()) "Selesai" else step.remainingBits
+            tvRemainingBits.text = if (step.remainingBits.isEmpty()) "-" else step.remainingBits
             tvCurrentDecoded.text = step.currentDecoded
             tvDescription.text = step.description
         }
