@@ -447,7 +447,7 @@ class MatrixSPLRepository {
             stepNumber = stepNumber++,
             description = "Matrix A (${matrix1.rows}×${matrix1.cols}):",
             matrix = matrix1.copy(),
-            operation = "Metode: Divide and Conquer"
+            operation = ""
         ))
 
         steps.add(MatrixStep(
@@ -464,8 +464,8 @@ class MatrixSPLRepository {
             steps.add(MatrixStep(
                 stepNumber = stepNumber++,
                 description = "Padding matriks ke ukuran ${nextPowerOf2}×${nextPowerOf2} (power of 2):",
-                matrix = Matrix(1, 1), // Dummy matrix
-                operation = "Menambah padding dengan nilai 0 untuk optimalisasi DnC"
+                matrix = Matrix(1, 1),
+                operation = ""
             ))
         }
 
@@ -504,16 +504,16 @@ class MatrixSPLRepository {
 
         steps.add(MatrixStep(
             stepNumber = stepNumber++,
-            description = "Hasil perkalian (menghilangkan padding):",
+            description = "Hilangkan padding:",
             matrix = finalResult.copy(),
-            operation = "Matrix hasil DnC diambil sesuai ukuran asli"
+            operation = ""
         ))
 
         steps.add(MatrixStep(
             stepNumber = stepNumber,
             description = "Hasil akhir perkalian matrix A × B:",
             matrix = finalResult,
-            operation = "Perkalian DnC selesai"
+            operation = ""
         ))
 
         return MatrixResult(
@@ -521,7 +521,7 @@ class MatrixSPLRepository {
             result = finalResult,
             steps = steps,
             success = true,
-            message = "Perkalian dengan Divide and Conquer berhasil",
+            message = "Perkalian berhasil",
             multiplicationMethod = MultiplicationMethod.DIVIDE_AND_CONQUER
         )
     }
@@ -710,9 +710,9 @@ class MatrixSPLRepository {
 
         steps.add(MatrixStep(
             stepNumber = stepNumber++,
-            description = "Proses penjumlahan elemen per elemen:",
+            description = "Jumlahkan elemen dengan baris dan kolom yang bersesuaian",
             matrix = intermediateMatrix.copy(),
-            operation = calculationDetails.joinToString(", ")
+            operation = calculationDetails.joinToString("\n")
         ))
 
         steps.add(MatrixStep(
@@ -776,9 +776,9 @@ class MatrixSPLRepository {
 
         steps.add(MatrixStep(
             stepNumber = stepNumber++,
-            description = "Proses pengurangan elemen per elemen:",
+            description = "Kurangkan elemen dengan baris dan kolom yang bersesuaian:",
             matrix = intermediateMatrix.copy(),
-            operation = calculationDetails.joinToString(", ")
+            operation = calculationDetails.joinToString("\n")
         ))
 
         steps.add(MatrixStep(
@@ -816,7 +816,7 @@ class MatrixSPLRepository {
             stepNumber = stepNumber++,
             description = "Matrix A (${matrix1.rows}×${matrix1.cols}):",
             matrix = matrix1.copy(),
-            operation = "Metode: Brute Force (Standar)"
+            operation = ""
         ))
 
         steps.add(MatrixStep(
@@ -825,6 +825,8 @@ class MatrixSPLRepository {
             matrix = matrix2.copy(),
             operation = ""
         ))
+
+        val allCalculations = mutableListOf<String>()
 
         for (i in 0 until matrix1.rows) {
             for (j in 0 until matrix2.cols) {
@@ -842,33 +844,23 @@ class MatrixSPLRepository {
 
                 result.set(i, j, sum)
 
-                val intermediateMatrix = Matrix(matrix1.rows, matrix2.cols)
-                for (ii in 0 until matrix1.rows) {
-                    for (jj in 0 until matrix2.cols) {
-                        if (ii < i || (ii == i && jj <= j)) {
-                            intermediateMatrix.set(ii, jj, result.get(ii, jj))
-                        } else {
-                            intermediateMatrix.set(ii, jj, 0.0)
-                        }
-                    }
-                }
-
                 val calculation = "C[${i+1},${j+1}] = ${calculationParts.joinToString(" + ")} = ${valueParts.joinToString(" + ")} = ${formatNumber(sum)}"
-
-                steps.add(MatrixStep(
-                    stepNumber = stepNumber++,
-                    description = "Hitung elemen C[${i+1},${j+1}]:",
-                    matrix = intermediateMatrix.copy(),
-                    operation = calculation
-                ))
+                allCalculations.add(calculation)
             }
         }
+
+        steps.add(MatrixStep(
+            stepNumber = stepNumber++,
+            description = "Hitung elemen matrix yang bersesuaian:",
+            matrix = result.copy(),
+            operation = allCalculations.joinToString("\n")
+        ))
 
         steps.add(MatrixStep(
             stepNumber = stepNumber,
             description = "Hasil perkalian matrix A × B:",
             matrix = result,
-            operation = "Perkalian matrix selesai"
+            operation = ""
         ))
 
         return MatrixResult(
@@ -876,82 +868,8 @@ class MatrixSPLRepository {
             result = result,
             steps = steps,
             success = true,
-            message = "Perkalian dengan Brute Force berhasil",
+            message = "Perkalian berhasil",
             multiplicationMethod = MultiplicationMethod.BRUTE_FORCE
-        )
-    }
-
-    private fun subtractMatrices(matrix1: Matrix, matrix2: Matrix): MatrixResult {
-        if (matrix1.rows != matrix2.rows || matrix1.cols != matrix2.cols) {
-            return MatrixResult(
-                operation = MatrixOperation.SUBTRACTION,
-                steps = emptyList(),
-                success = false,
-                message = "Matrix harus memiliki dimensi yang sama untuk pengurangan"
-            )
-        }
-
-        val result = Matrix(matrix1.rows, matrix1.cols)
-        val steps = mutableListOf<MatrixStep>()
-
-        for (i in 0 until matrix1.rows) {
-            for (j in 0 until matrix1.cols) {
-                result.set(i, j, matrix1.get(i, j) - matrix2.get(i, j))
-            }
-        }
-
-        steps.add(MatrixStep(
-            stepNumber = 1,
-            description = "Pengurangan matrix:",
-            matrix = result,
-            operation = "C[i,j] = A[i,j] - B[i,j]"
-        ))
-
-        return MatrixResult(
-            operation = MatrixOperation.SUBTRACTION,
-            result = result,
-            steps = steps,
-            success = true,
-            message = "Pengurangan berhasil"
-        )
-    }
-
-    private fun multiplyMatrices(matrix1: Matrix, matrix2: Matrix): MatrixResult {
-        if (matrix1.cols != matrix2.rows) {
-            return MatrixResult(
-                operation = MatrixOperation.MULTIPLICATION,
-                steps = emptyList(),
-                success = false,
-                message = "Jumlah kolom matrix pertama harus sama dengan jumlah baris matrix kedua"
-            )
-        }
-
-        val result = Matrix(matrix1.rows, matrix2.cols)
-        val steps = mutableListOf<MatrixStep>()
-
-        for (i in 0 until matrix1.rows) {
-            for (j in 0 until matrix2.cols) {
-                var sum = 0.0
-                for (k in 0 until matrix1.cols) {
-                    sum += matrix1.get(i, k) * matrix2.get(k, j)
-                }
-                result.set(i, j, sum)
-            }
-        }
-
-        steps.add(MatrixStep(
-            stepNumber = 1,
-            description = "Perkalian matrix:",
-            matrix = result,
-            operation = "C[i,j] = Σ(A[i,k] × B[k,j])"
-        ))
-
-        return MatrixResult(
-            operation = MatrixOperation.MULTIPLICATION,
-            result = result,
-            steps = steps,
-            success = true,
-            message = "Perkalian berhasil"
         )
     }
 
@@ -1051,7 +969,7 @@ class MatrixSPLRepository {
             stepNumber = stepNumber++,
             description = "Matrix A (${matrix.rows}×${matrix.cols}):",
             matrix = matrix.copy(),
-            operation = "Eksponensiasi: A^$exponent menggunakan Divide and Conquer"
+            operation = ""
         ))
 
         when (exponent) {
@@ -1120,7 +1038,7 @@ class MatrixSPLRepository {
             stepNumber = stepNumber,
             description = "Hasil akhir eksponensiasi A^$exponent:",
             matrix = result,
-            operation = "Eksponensiasi DnC selesai"
+            operation = ""
         ))
 
         return MatrixResult(
